@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1729"/><stop offset="1" stop-color="#123a43"/></linearGradient>
+    <linearGradient id="line"><stop stop-color="#8fe6cc"/><stop offset="1" stop-color="#d9f5a1"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#70c7b2" stop-opacity=".2"/><stop offset="1" stop-color="#70c7b2" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="url(#bg)"/>
+  <circle cx="940" cy="160" r="240" fill="url(#glow)"/>
+  <g stroke="#e6fff6" opacity=".07"><path d="M750 50v260M810 50v260M870 50v260M930 50v260M990 50v260M1050 50v260M1110 50v260"/><path d="M700 100h450M700 160h450M700 220h450M700 280h450"/></g>
+  <g fill="#a2f0cf" font-family="Arial,sans-serif" font-size="13" letter-spacing="3"><text x="72" y="77">SYNTHÈSE VOCALE FRANÇAISE</text></g>
+  <text x="67" y="164" fill="#f2fcf7" font-family="Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-3">Paradis<tspan fill="#a2f0cf">.</tspan></text>
+  <text x="72" y="212" fill="#c0d4d7" font-family="Arial,sans-serif" font-size="23">Une voix française. Dans votre application.</text>
+  <g font-family="Arial,sans-serif" font-size="15" fill="#e6fff6">
+    <rect x="72" y="252" width="126" height="35" rx="17" fill="#ffffff" fill-opacity=".08"/><text x="91" y="275">8,08 M params</text>
+    <rect x="210" y="252" width="142" height="35" rx="17" fill="#ffffff" fill-opacity=".08"/><text x="231" y="275">CPU · Hors ligne</text>
+    <rect x="364" y="252" width="131" height="35" rx="17" fill="#ffffff" fill-opacity=".08"/><text x="385" y="275">ONNX · 24 kHz</text>
+  </g>
+  <g fill="none" stroke="url(#line)" stroke-width="4" stroke-linecap="round">
+    <path d="M713 180h22l8-12 9 24 10-48 10 72 10-38 10 6 9-44 10 82 10-111 10 136 10-180 10 211 10-161 10 111 10-169 10 196 10-122 10 80 10-105 10 133 10-162 10 154 10-93 10 42 10-18 10 21 10-13 10 5h30"/>
+  </g>
+  <text x="1067" y="321" fill="#9bbdbf" font-family="Arial,sans-serif" font-size="14">v0 · open source</text>
+</svg>

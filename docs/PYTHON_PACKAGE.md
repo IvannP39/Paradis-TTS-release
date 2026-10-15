@@ -1,0 +1,68 @@
+# Package Python v0
+
+Python 3.10 à 3.12. Runtime CPU : NumPy, ONNX Runtime, Misaki et eSpeak NG.
+Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
+
+Le wheel et les sources distribuables sont joints à la
+[release v0](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0).
+Tant que le projet n'est pas enregistré sur PyPI, installer le wheel public :
+
+```bash
+python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.0-py3-none-any.whl
+```
+
+```python
+from paradis_tts import ParadisTTS
+
+tts = ParadisTTS()  # équivalent à post_traitement=True
+audio = tts("Bonjour tout le monde.")  # numpy.float32, mono, 24 000 Hz
+tts.save(audio, "bonjour.wav")
+```
+
+Le premier chargement télécharge le FP32 depuis la release GitHub figée, vérifie
+son SHA256 puis le conserve dans le cache. Les suivants fonctionnent hors ligne.
+La sortie n'est pas jouée automatiquement. Le cache est sous `%LOCALAPPDATA%`
+sur Windows, `~/.cache` ailleurs ; `PARADIS_TTS_CACHE` permet de le déplacer.
+
+```python
+tts = ParadisTTS(variant="int8")
+tts = ParadisTTS(local_files_only=True)  # échoue si aucun modèle n'est déjà en cache
+tts = ParadisTTS(bundle="chemin/vers/fp32")  # archive décompressée, aucun téléchargement
+tts = ParadisTTS(post_traitement=False)  # désactive tous les filtres
+tts.to_file("Le TGV part à 18 h 30.", "train.wav", seed=1729, speed=1.0)
+```
+
+Traitements par défaut : filtre de phase 97, présence jusqu'à 2,5 dB,
+adoucir les aigus dynamiquement jusqu'à 1 dB, haut du spectre réduit de 1,5 dB.
+La réduction des attaques, des syllabes fortes et le lissage sont à zéro.
+Le profil local `postprocessing.json` permet de régler ces valeurs.
+
+```python
+from paradis_tts import ParadisTTS, PostProcessing
+
+tts = ParadisTTS(postprocessing=PostProcessing(
+    dynamic_soften_db=1.0, upper_soften_db=1.5,
+    attack_soften_db=0.5, syllable_soften_db=0.0, dynamics_smoothing=0.5,
+))
+```
+
+Les filtres sont inclus dans l'API et appliqués une seule fois. Pour traiter
+séparément un WAV 24 kHz mono PCM16, utiliser `postprocess_wav`. Cela applique
+l'adoucissement spectral/dynamique ; le filtre de phase nécessite les signaux
+internes et reste propre à la synthèse.
+
+```bash
+paradis-tts synthesize --text "Bonjour tout le monde." --output bonjour.wav
+paradis-tts synthesize --variant int8 --text "Bonjour." --output bonjour.wav
+```
+
+Construire les distributions : `python -m build`, puis
+`python -m twine check dist/*`. Le wheel embarque uniquement le runtime ; les
+poids restent dans les assets de release avec SHA256 figés. Le wheel peut être
+envoyé à PyPI avec `python -m twine upload dist/*` après authentification du
+propriétaire, ou via le workflow Trusted Publishing fourni. Ne pas ajouter de
+token dans le dépôt. Le package est préparé pour PyPI ; sa présence sur GitHub
+ne signifie pas qu'il est déjà publié dans l'index PyPI.
+
+Compatibilité vérifiée localement : Windows, Python 3.11, CPU AMD Ryzen 7 5800H.
+Les autres plateformes sont ciblées, sans benchmark local revendiqué.

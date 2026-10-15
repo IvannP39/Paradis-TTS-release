@@ -1,0 +1,18 @@
+{
+  "count": 300,
+  "seed": 1729,
+  "length_bins": {
+    "long": 60,
+    "medium": 180,
+    "short": 60
+  },
+  "articles_disjoint_from_train_validation_test": true,
+  "one_sentence_per_article": true,
+  "exact_overlap": 0,
+  "near_duplicate_jaccard_threshold": 0.85,
+  "shingle_words": 3,
+  "heldout_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+  "prior_metadata_sha256": "1144c9db75cb9431b124a97346c8362b09fb3098145aea1dd29cffce4247aaed",
+  "candidate_cache_sha256": "e78b0d12409f32b05bbb3e25b8ce56c650efa1b6e57c50d28ee3826b85ab8409",
+  "limitation": "Same pinned French Wikipedia snapshot as training; not an out-of-domain benchmark. Kokoro/Piper pretraining overlap cannot be ruled out."
+}

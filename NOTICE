@@ -1,0 +1,87 @@
+Paradis-TTS — provenance notices
+
+paradis_tts/onnx_models.py adapts the single-sentence text forward and
+convolutional STFT from Paradee training/scripts/export_paradee.py,
+Sahil Mahendrakar, commit 9c8b4d7504cbee7e64de2d0341bb690f0b0ab708,
+Apache-2.0. Changes: French A_full_phase, three explicit deterministic ONNX
+stages, host excitation and host postprocessing, CPU parity checks and
+portable FP32/INT8-weight bundles. See LICENSE and docs/PHASE9_ONNX.md.
+
+The portable NumPy phase filter in paradis_tts/audio.py implements the same
+Paradee relative-phase correction described below; existing training sources
+and their licenses are unchanged.
+
+Paradis-TTS — phase 0 French feasibility audit
+
+The teacher extraction in scripts/test_teacher_fr.py is adapted from:
+Paradee, Sahil Mahendrakar
+https://github.com/sahilmahendrakar/paradee
+Commit: 9c8b4d7504cbee7e64de2d0341bb690f0b0ab708
+File: training/scripts/gen_teacher.py
+License: Apache-2.0 (see LICENSE)
+Changes: French ff_siwis, pinned assets, CPU determinism, strict vocabulary
+validation, hooks for independent parity checks, logs and test artifacts.
+
+Kokoro-82M and Kokoro / Misaki software: hexgrad, Apache-2.0.
+https://huggingface.co/hexgrad/Kokoro-82M
+https://github.com/hexgrad/kokoro
+https://github.com/hexgrad/misaki
+
+French teacher voice: ff_siwis. Kokoro attributes its source data to:
+Yamagishi, Junichi; Honnet, Pierre-Edouard; Garner, Philip; Lazaridis, Alexandros.
+(2017). The SIWIS French Speech Synthesis Database, 2016 [dataset].
+University of Edinburgh, School of Informatics, Centre for Speech Technology Research.
+https://doi.org/10.7488/ds/1705
+Source-data license: https://creativecommons.org/licenses/by/4.0/
+The included WAVs are synthetic Kokoro outputs from original test sentences;
+they are not recordings downloaded from SIWIS.
+
+No WikiText or Wikipedia text is redistributed in phase 0 evidence.
+Phase 1 includes French Wikipedia sentence excerpts in data/:
+Contributors to French Wikipedia; article and history URLs in metadata.jsonl.
+Source: wikimedia/wikipedia, 20231101.fr,
+revision b04c8d1ceb2f5cd4588862100d08de323dccfbaa.
+Original source-declared license: CC BY-SA 3.0.
+Adapted corpus / original coverage sentences: CC BY-SA 4.0.
+See data/README.md and docs/LICENSING.md for notices and changes.
+
+Phase 2 extraction adapts Paradee training/scripts/gen_teacher.py and
+training/scripts/regen_audio.py at the same audited Paradee commit.
+Changes include French corpus/voice, stable per-ID seeds, atomic tensor shards,
+checked resume, and a CUDA decoder with original CPU excitation and FFT math.
+Generated teacher audio is kept in tensor shards without additional WAV exports.
+Dependency licenses, including eSpeak NG's GPL, remain separate from this
+repository's source-code license; see docs/LICENSING.md.
+
+Phases 3/4 include unmodified Paradee training/scripts/student.py and
+student_decoder.py in training/vendor/, under Apache-2.0 at the audited commit.
+training/batches.py and losses.py adapt its baseline collators and loss formulas.
+Changes: French split-aware smoke subsets, deterministic CPU reflection padding,
+small batches/accumulation, portable RNG/optimizer/scaler checkpoints and Colab tools.
+No English Paradee model weights or English corpus are used for French training.
+
+Phase 6 includes unmodified Paradee training/scripts/discriminators.py at the
+same audited commit. training/decoder_training.py and decoder_gan.py adapt
+train_decoder.py: French split-aware data, spectral/GAN stages, CPU reflection
+padding, exact global STFT convergence across accumulated microbatches, full
+optimizer/discriminator/RNG resume, Drive backups and tensor/HTML listening.
+
+paradis_tts/phase_lock.py adapts Paradee training/scripts/phase_lock.py at the
+same audited Apache-2.0 commit. It is initially exposed in a CPU listening A/B
+test; the raw student inference and trained checkpoints remain the references.
+tests/fixtures/upstream_phase_lock.py contains the original smooth/lock
+function bodies for a standalone parity test, under the same Apache-2.0 license.
+
+The optional high-frequency loss in training/decoder_hf.py adapts the
+--hf-weight objective from Paradee training/scripts/train_decoder.py at
+commit 9c8b4d7504cbee7e64de2d0341bb690f0b0ab708 (Apache-2.0).
+Evaluation uses the non-personalized DNSMOS P.835 windowing/calibration method
+from Microsoft DNS-Challenge, revision 591184a9fcb2cbdec02520fed81a32bbbf9d73ff,
+DNSMOS/dnsmos_local.py. Source repository license: CC BY 4.0.
+https://github.com/microsoft/DNS-Challenge
+https://creativecommons.org/licenses/by/4.0/
+Adaptation: P.835 only (no P.808), SciPy polyphase resampling, explicit CPU thread
+limits, resumable per-sentence logs and integration with held-out TTS evaluation.
+DNSMOS model files are downloaded for evaluation and are not redistributed in
+the Python package or inference archives. This attribution does not imply
+Microsoft endorses Paradis-TTS.

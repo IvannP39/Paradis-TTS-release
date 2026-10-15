@@ -1,0 +1,25 @@
+{
+  "seed": 1729,
+  "sentences": "evaluation/heldout_v0.jsonl",
+  "threads": 2,
+  "asr": {
+    "repo": "Systran/faster-whisper-small",
+    "revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "device": "cpu", "compute_type": "int8", "beam_size": 5, "language": "fr"
+  },
+  "piper": {
+    "repo": "rhasspy/piper-voices",
+    "revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+    "file": "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx"
+  },
+  "kokoro": {
+    "repo": "hexgrad/Kokoro-82M",
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "voice": "ff_siwis"
+  },
+  "dnsmos": {
+    "url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/591184a9fcb2cbdec02520fed81a32bbbf9d73ff/DNSMOS/DNSMOS/sig_bak_ovr.onnx",
+    "window_seconds": 9.01,
+    "interpretation": "DNSMOS P.835 non-personalized speech/noise proxy. Not human MOS or TTS naturalness."
+  }
+}

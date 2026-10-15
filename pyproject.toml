@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paradis-tts"
+version = "0.1.0"
+description = "Compact French text-to-speech on CPU, with built-in audio postprocessing"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{name = "IvannP39"}]
+keywords = ["tts", "french", "onnx", "speech-synthesis", "offline"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Natural Language :: French",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+dependencies = [
+  "numpy>=1.26.4,<2",
+  "onnxruntime>=1.20.1,<1.21",
+  "misaki==0.9.4",
+  "num2words==0.5.14",
+  "phonemizer-fork==3.3.2",
+  "espeakng-loader==0.2.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/IvannP39/Paradis-TTS-release"
+Models = "https://huggingface.co/IvannP/Paradis-TTS"
+Issues = "https://github.com/IvannP39/Paradis-TTS-release/issues"
+
+[project.scripts]
+paradis-tts = "paradis_tts.__main__:main"
+
+[tool.setuptools]
+packages = ["paradis_tts"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+paradis_tts = ["release_assets.json"]

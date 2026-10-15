@@ -1,0 +1,43 @@
+{
+  "paradee": {
+    "revision": "9c8b4d7504cbee7e64de2d0341bb690f0b0ab708",
+    "url": "https://github.com/sahilmahendrakar/paradee",
+    "license": "Apache-2.0"
+  },
+  "kokoro": {
+    "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+    "url": "https://huggingface.co/hexgrad/Kokoro-82M",
+    "license": "Apache-2.0",
+    "voice": "ff_siwis"
+  },
+  "siwis": {
+    "url": "https://doi.org/10.7488/ds/1705",
+    "license": "CC-BY-4.0"
+  },
+  "wikipedia": {
+    "repo": "wikimedia/wikipedia",
+    "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+    "subset": "20231101.fr",
+    "snapshot": "2023-11-01",
+    "declared_license": "CC-BY-SA-3.0",
+    "corpus_license": "CC-BY-SA-4.0",
+    "files": [
+      {
+        "path": "20231101.fr/train-00011-of-00017.parquet",
+        "sha256": "9f22117719b41a8b4fbf08ba02112fb5395335822904850619a7bbbeedf16512"
+      },
+      {
+        "path": "20231101.fr/train-00015-of-00017.parquet",
+        "sha256": "6fd9b03e0ac2849574d8fd73b4222c972d2d1e2ab589c374a069f7b11cd1ad89"
+      }
+    ],
+    "articles_per_shard": 10000,
+    "sentences_per_article": 3
+  },
+  "dnsmos": {
+    "url": "https://github.com/microsoft/DNS-Challenge",
+    "revision": "591184a9fcb2cbdec02520fed81a32bbbf9d73ff",
+    "license": "CC-BY-4.0"
+  },
+  "inventory": "Runtime, student ONNX archives, original demonstration audio, evaluation results and attributed text metadata. No teacher weights, source SIWIS recordings, training shards, optimizer, credentials or private Git history."
+}

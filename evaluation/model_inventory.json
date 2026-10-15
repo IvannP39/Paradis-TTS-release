@@ -1,0 +1,17 @@
+{
+  "kokoro": {
+    "parameters": 81810022,
+    "bytes": 327212226,
+    "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4"
+  },
+  "piper": {
+    "stored_initializer_elements": 15650556,
+    "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+    "count_method": "sum of all ONNX initializer dimensions; includes constants and buffers, not strictly trainable parameters"
+  },
+  "paradis": {
+    "parameters": 8082881,
+    "fp32_onnx_bytes": 32819396,
+    "int8_onnx_bytes": 9186652
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+  "config_sha256": "e22137c6c95b123f04da0dfbe5a7ae9f2b63f67759fb189104a9a7a589e4bc90",
+  "dnsmos_sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd",
+  "asr": {
+    "repo": "Systran/faster-whisper-small",
+    "revision": "536b0662742c02347bc0e980a01041f333bce120",
+    "device": "cuda",
+    "compute_type": "float16",
+    "beam_size": 5,
+    "language": "fr"
+  },
+  "faster_whisper": "1.2.1",
+  "jiwer": "4.0.0",
+  "synthesis_contract_sha256": "39abb41b00b53236774d8b5f850942746fbff4bfddb8e9be691dbe92bd10a5fc",
+  "scoring": "fr-runtime-2 casefold; Unicode word tokens; apostrophes/hyphens split; accents retained"
+}

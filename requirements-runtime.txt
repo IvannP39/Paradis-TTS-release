@@ -1,0 +1,7 @@
+# CPU-only ONNX inference. No Torch, Kokoro or teacher weights.
+numpy==1.26.4
+onnxruntime==1.20.1
+misaki==0.9.4
+num2words==0.5.14
+phonemizer-fork==3.3.2
+espeakng-loader==0.2.4

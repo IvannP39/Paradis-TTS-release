@@ -1,0 +1,31 @@
+{
+  "status": "COMPLETE",
+  "count": 300,
+  "model": {
+    "sample_rate": 24000,
+    "repo": {
+      "repo": "hexgrad/Kokoro-82M",
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "voice": "ff_siwis"
+    },
+    "runtime": "0.9.4",
+    "parameters": 81810022,
+    "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+    "bytes": 327212226
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+    "threads": 2,
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.4",
+    "numpy": "1.26.4",
+    "onnxruntime": "1.20.1",
+    "device": "cpu",
+    "concurrent_gpu_training": true,
+    "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+  },
+  "load_seconds": 10.551816899329424,
+  "peak_process_rss_bytes": 4619108352,
+  "warmup_excluded": true,
+  "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+}

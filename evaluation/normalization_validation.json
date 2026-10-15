@@ -1,0 +1,194 @@
+{
+  "status": "NORMALIZATION_AND_OFFLINE_G2P_PASS",
+  "date": "2026-10-16",
+  "version": "fr-runtime-2",
+  "case_count": 15,
+  "cases": [
+    {
+      "text": "Le billet coûte 12,50 €.",
+      "expected": "Le billet coûte douze euros et cinquante centimes.",
+      "normalized_text": "Le billet coûte douze euros et cinquante centimes.",
+      "rules": [
+        "euro"
+      ],
+      "phonemes": [
+        "lə bijˈɛ kˈut dˈuz øʁˈoz e sɛ̃kˈɑ̃t sɑ̃tˈim."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Il est 18 h 30.",
+      "expected": "Il est dix-huit heures trente.",
+      "normalized_text": "Il est dix-huit heures trente.",
+      "rules": [
+        "hour"
+      ],
+      "phonemes": [
+        "il ɛ dˈizyˈit ˈœʁ tʁˈɑ̃t."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Nous sommes en 2026.",
+      "expected": "Nous sommes en deux mille vingt-six.",
+      "normalized_text": "Nous sommes en deux mille vingt-six.",
+      "rules": [
+        "number"
+      ],
+      "phonemes": [
+        "nu sɔmz ɑ̃ dˈø mˈil vˈɛ̃tsˈis."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Une remise de 25 %.",
+      "expected": "Une remise de vingt-cinq pour cent.",
+      "normalized_text": "Une remise de vingt-cinq pour cent.",
+      "rules": [
+        "unit",
+        "number"
+      ],
+      "phonemes": [
+        "yn ʁəmˈiz də vˈɛ̃tsˈɛ̃k puʁ sˈɑ̃."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "La valeur est 3,14.",
+      "expected": "La valeur est trois virgule un quatre.",
+      "normalized_text": "La valeur est trois virgule un quatre.",
+      "rules": [
+        "number"
+      ],
+      "phonemes": [
+        "la valˈœʁ ɛ tʁwˈa viʁɡˈyl œ̃ kˈatʁ."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Il parcourt 3 km avec 2 kg.",
+      "expected": "Il parcourt trois kilomètres avec deux kilogrammes.",
+      "normalized_text": "Il parcourt trois kilomètres avec deux kilogrammes.",
+      "rules": [
+        "unit",
+        "number"
+      ],
+      "phonemes": [
+        "il paʁkˈuʁ tʁwˈa kilomˈɛtʁ avˌɛk dˈø kilɔɡʁˈam."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "M. Dupont et Mme Martin.",
+      "expected": "Monsieur Dupont et Madame Martin.",
+      "normalized_text": "Monsieur Dupont et Madame Martin.",
+      "rules": [
+        "abbreviation"
+      ],
+      "phonemes": [
+        "məsjˈø dypˈɔ̃t e madˈam maʁtˈɛ̃."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Dr. Durand arrive.",
+      "expected": "Docteur Durand arrive.",
+      "normalized_text": "Docteur Durand arrive.",
+      "rules": [
+        "abbreviation"
+      ],
+      "phonemes": [
+        "dɔktˈœʁ dyʁˈɑ̃ aʁˈiv."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "La SNCF exploite le TGV.",
+      "expected": "La ès ène cé èf exploite le té gé vé.",
+      "normalized_text": "La ès ène cé èf exploite le té gé vé.",
+      "rules": [
+        "acronym"
+      ],
+      "phonemes": [
+        "la ɛs ˈɛn sˈe ˈɛf ɛksplwˈat lə tˈe ʒˈe vˈe."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Voir https://exemple.fr.",
+      "expected": "Voir exemple point èf ère.",
+      "normalized_text": "Voir exemple point èf ère.",
+      "rules": [
+        "url"
+      ],
+      "phonemes": [
+        "vwˈaʁ ɛɡzˈɑ̃pl pwˌɛ̃ ˈɛf ˈɛʁ."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Écrire à contact@exemple.fr.",
+      "expected": "Écrire à contact arobase exemple point èf ère.",
+      "normalized_text": "Écrire à contact arobase exemple point èf ère.",
+      "rules": [
+        "email"
+      ],
+      "phonemes": [
+        "ekʁˈiʁ a kɔ̃tˈakt aʁobˈaz ɛɡzˈɑ̃pl pwˌɛ̃ ˈɛf ˈɛʁ."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Bonjour ! Comment allez-vous ?",
+      "expected": "Bonjour ! Comment allez-vous ?",
+      "normalized_text": "Bonjour ! Comment allez-vous ?",
+      "rules": [],
+      "phonemes": [
+        "bɔ̃ʒˈuʁ ! kɔmˌɑ̃ alˈevˈu ?"
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Le 01/02/2026.",
+      "expected": "Le premier février deux mille vingt-six.",
+      "normalized_text": "Le premier février deux mille vingt-six.",
+      "rules": [
+        "date"
+      ],
+      "phonemes": [
+        "lə pʁəmjˈe fevʁiˈe dˈø mˈil vˈɛ̃tsˈis."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Il est 21h.",
+      "expected": "Il est vingt et une heures.",
+      "normalized_text": "Il est vingt et une heures.",
+      "rules": [
+        "hour"
+      ],
+      "phonemes": [
+        "il ɛ vˈɛ̃t e yn ˈœʁ."
+      ],
+      "unknown_phonemes": false
+    },
+    {
+      "text": "Mlle. Élise arrive.",
+      "expected": "Mademoiselle Élise arrive.",
+      "normalized_text": "Mademoiselle Élise arrive.",
+      "rules": [
+        "abbreviation"
+      ],
+      "phonemes": [
+        "madmwazˈɛl elˈiz aʁˈiv."
+      ],
+      "unknown_phonemes": false
+    }
+  ],
+  "training_normalizer_unchanged": true,
+  "source_sha256": {
+    "paradis_tts/normalization.py": "a079a1b3dd0b6a9c8a0fb77ec02973e0ee819e5ae8110f478344d346aa226a37",
+    "paradis_tts/normalization_v2.py": "032b10f4533d8bca9fc02b5ec63f97c290fc43fb3ea96ab1575cbbf0fbed6884",
+    "configs/normalization_cases.json": "6556c73903739d8814e4925a514ccd56ce05104c6677c67f3dd613e464882c90"
+  }
+}

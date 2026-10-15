@@ -1,0 +1,133 @@
+{
+  "status": "RELEASE_VALIDATION_PASS",
+  "unit_tests": 122,
+  "public_api_tests": 3,
+  "onnx_fp32_parity": [
+    {
+      "errors": {
+        "duration": 1.9073486328125e-06,
+        "f0": 9.1552734375e-05,
+        "features": 1.0132789611816406e-06,
+        "noise": 2.86102294921875e-06,
+        "prosody": 1.7881393432617188e-06,
+        "waveform": 3.684312105178833e-05,
+        "waveform_relative_rms": 3.333876785075659e-05
+      },
+      "samples": 30000,
+      "speed": 1.0,
+      "text": "Bonjour."
+    },
+    {
+      "errors": {
+        "duration": 9.5367431640625e-07,
+        "f0": 0.0001068115234375,
+        "features": 1.1026859283447266e-06,
+        "noise": 4.76837158203125e-06,
+        "prosody": 2.6226043701171875e-06,
+        "waveform": 0.0006873905658721924,
+        "waveform_relative_rms": 0.00011625190211921663
+      },
+      "samples": 76200,
+      "speed": 0.75,
+      "text": "Ces six saucisses sont assez salées."
+    },
+    {
+      "errors": {
+        "duration": 3.814697265625e-06,
+        "f0": 7.62939453125e-05,
+        "features": 1.0728836059570312e-06,
+        "noise": 3.814697265625e-06,
+        "prosody": 2.7418136596679688e-06,
+        "waveform": 1.3113021850585938e-06,
+        "waveform_relative_rms": 1.1304203781444973e-06
+      },
+      "samples": 66600,
+      "speed": 1.25,
+      "text": "La lune illumine le village au milieu de la nuit."
+    },
+    {
+      "errors": {
+        "duration": 1.9073486328125e-06,
+        "f0": 0.0001220703125,
+        "features": 1.1324882507324219e-06,
+        "noise": 5.7220458984375e-06,
+        "prosody": 3.0994415283203125e-06,
+        "waveform": 1.5944242477416992e-06,
+        "waveform_relative_rms": 1.3392825042577683e-06
+      },
+      "samples": 133200,
+      "speed": 1.0,
+      "text": "Le billet coûte 12,50 € et le train part à 18 h 30."
+    }
+  ],
+  "portable_audio_parity": {
+    "checks": [
+      {
+        "matched_noise_source_max_abs_error": 7.367134094238281e-05,
+        "postprocess_max_abs_error": 2.644956111907959e-06,
+        "text": "Bonjour."
+      },
+      {
+        "matched_noise_source_max_abs_error": 0.0001372992992401123,
+        "postprocess_max_abs_error": 7.105059921741486e-06,
+        "text": "Ces six saucisses sont assez salées."
+      },
+      {
+        "matched_noise_source_max_abs_error": 0.0001935809850692749,
+        "postprocess_max_abs_error": 5.707144737243652e-06,
+        "text": "La lune illumine le village au milieu de la nuit."
+      }
+    ],
+    "source_rng_note": "Matched noise checks interpolation/math; production PCG64 noise differs from Torch RNG",
+    "status": "PORTABLE_AUDIO_PARITY_PASS"
+  },
+  "offline_bundles": {
+    "fp32": {
+      "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+      "variant": "fp32",
+      "torch_installed": false,
+      "kokoro_installed": false,
+      "network_blocked": true,
+      "seed_repeatable": true,
+      "different_seed_changes_audio": true,
+      "speed_05_and_2_pass": true,
+      "long_text_chunks": 2,
+      "wav_exports": 3,
+      "pcm_sample_rate": 24000,
+      "standalone_postprocess_pass": true,
+      "settings_file_pass": true,
+      "editable_default_settings_pass": true,
+      "benchmark_note": "Indicative CPU timings while a separate GPU training run is active"
+    },
+    "int8": {
+      "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+      "variant": "int8",
+      "torch_installed": false,
+      "kokoro_installed": false,
+      "network_blocked": true,
+      "seed_repeatable": true,
+      "different_seed_changes_audio": true,
+      "speed_05_and_2_pass": true,
+      "long_text_chunks": 2,
+      "wav_exports": 3,
+      "pcm_sample_rate": 24000,
+      "standalone_postprocess_pass": true,
+      "settings_file_pass": true,
+      "editable_default_settings_pass": true,
+      "benchmark_note": "Indicative CPU timings while a separate GPU training run is active"
+    }
+  },
+  "functional_payload_identical_to_offline_checked_archive": true,
+  "wheel_installed_without_torch": true,
+  "default_processing_equals_explicit_true": true,
+  "evaluation_phrases_per_variant": 300,
+  "evaluation_variants": [
+    "fp32",
+    "int8",
+    "kokoro",
+    "piper"
+  ],
+  "raw_decoder_continuation_step": 6500,
+  "text_step": 8000,
+  "pypi_index_published": false
+}

@@ -1,0 +1,371 @@
+{
+  "status": "COMPLETE",
+  "count": 300,
+  "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+  "config": {
+    "seed": 1729,
+    "sentences": "evaluation/heldout_v0.jsonl",
+    "threads": 2,
+    "asr": {
+      "repo": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "device": "cpu",
+      "compute_type": "int8",
+      "beam_size": 5,
+      "language": "fr"
+    },
+    "piper": {
+      "repo": "rhasspy/piper-voices",
+      "revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+      "file": "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx"
+    },
+    "kokoro": {
+      "repo": "hexgrad/Kokoro-82M",
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "voice": "ff_siwis"
+    },
+    "dnsmos": {
+      "url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/591184a9fcb2cbdec02520fed81a32bbbf9d73ff/DNSMOS/DNSMOS/sig_bak_ovr.onnx",
+      "window_seconds": 9.01,
+      "interpretation": "DNSMOS P.835 non-personalized speech/noise proxy. Not human MOS or TTS naturalness."
+    }
+  },
+  "quality_proxy_limit": "DNSMOS P.835 non-personalized speech/noise proxy. Not human MOS or TTS naturalness.",
+  "variants": {
+    "fp32": {
+      "count": 300,
+      "wer": 0.1251372118551043,
+      "wer_bootstrap_95_percent_interval": [
+        0.11183547529432722,
+        0.13945069186779524
+      ],
+      "substitutions": 558,
+      "deletions": 52,
+      "insertions": 74,
+      "reference_words": 5466,
+      "dnsmos_p835": {
+        "sig": 3.5939334352310395,
+        "bak": 4.148278306145471,
+        "ovrl": 3.3597379214103773
+      },
+      "rtf_median": 0.17483486500097198,
+      "rtf_p95": 0.23151563807128014,
+      "rtf_global": 0.1696208573123141,
+      "generated_seconds": 1974.7750000000012,
+      "synthesis_seconds": 334.96302849892527,
+      "duration_min_seconds": 2.35,
+      "duration_max_seconds": 15.125,
+      "mean_generation_seconds": 1.1165434283297508,
+      "max_clipped_fraction": 0.0,
+      "scoring_contract": {
+        "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+        "config_sha256": "e22137c6c95b123f04da0dfbe5a7ae9f2b63f67759fb189104a9a7a589e4bc90",
+        "dnsmos_sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd",
+        "asr": {
+          "repo": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "device": "cuda",
+          "compute_type": "float16",
+          "beam_size": 5,
+          "language": "fr"
+        },
+        "faster_whisper": "1.2.1",
+        "jiwer": "4.0.0",
+        "synthesis_contract_sha256": "5c6e397bfff9b76b6ea6d6b92a4beb126c87b6176fb96ef0a679249dff3e1825",
+        "scoring": "fr-runtime-2 casefold; Unicode word tokens; apostrophes/hyphens split; accents retained"
+      },
+      "status": "COMPLETE",
+      "model": {
+        "sample_rate": 24000,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "parameters": {
+          "decoder": 3851053,
+          "text": 4231828,
+          "total": 8082881
+        },
+        "normalization": "fr-runtime-2",
+        "precision": "fp32",
+        "integer_compute": false
+      },
+      "environment": {
+        "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "threads": 2,
+        "os": "Windows-10-10.0.22631-SP0",
+        "python": "3.11.4",
+        "numpy": "1.26.4",
+        "onnxruntime": "1.20.1",
+        "device": "cpu",
+        "concurrent_gpu_training": true,
+        "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+      },
+      "load_seconds": 2.5480222003534436,
+      "peak_process_rss_bytes": 391757824,
+      "warmup_excluded": true,
+      "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+    },
+    "int8": {
+      "count": 300,
+      "wer": 0.1269667032564947,
+      "wer_bootstrap_95_percent_interval": [
+        0.11309915191938165,
+        0.14125322526464043
+      ],
+      "substitutions": 555,
+      "deletions": 65,
+      "insertions": 74,
+      "reference_words": 5466,
+      "dnsmos_p835": {
+        "sig": 3.588668204373987,
+        "bak": 4.1479276249313415,
+        "ovrl": 3.3541977317816545
+      },
+      "rtf_median": 0.18319395322651055,
+      "rtf_p95": 0.24297440786899377,
+      "rtf_global": 0.18698728760094058,
+      "generated_seconds": 1976.5500000000013,
+      "synthesis_seconds": 369.58972330763936,
+      "duration_min_seconds": 2.375,
+      "duration_max_seconds": 15.075,
+      "mean_generation_seconds": 1.231965744358798,
+      "max_clipped_fraction": 0.0,
+      "scoring_contract": {
+        "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+        "config_sha256": "e22137c6c95b123f04da0dfbe5a7ae9f2b63f67759fb189104a9a7a589e4bc90",
+        "dnsmos_sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd",
+        "asr": {
+          "repo": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "device": "cuda",
+          "compute_type": "float16",
+          "beam_size": 5,
+          "language": "fr"
+        },
+        "faster_whisper": "1.2.1",
+        "jiwer": "4.0.0",
+        "synthesis_contract_sha256": "62f326a44825b82802d5351cf0da6ba0fd3c4a1a2337dfa2a83ce5dbeefb431c",
+        "scoring": "fr-runtime-2 casefold; Unicode word tokens; apostrophes/hyphens split; accents retained"
+      },
+      "status": "COMPLETE",
+      "model": {
+        "sample_rate": 24000,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "parameters": {
+          "decoder": 3851053,
+          "text": 4231828,
+          "total": 8082881
+        },
+        "normalization": "fr-runtime-2",
+        "precision": "int8",
+        "integer_compute": false
+      },
+      "environment": {
+        "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "threads": 2,
+        "os": "Windows-10-10.0.22631-SP0",
+        "python": "3.11.4",
+        "numpy": "1.26.4",
+        "onnxruntime": "1.20.1",
+        "device": "cpu",
+        "concurrent_gpu_training": true,
+        "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+      },
+      "load_seconds": 2.420302899554372,
+      "peak_process_rss_bytes": 371826688,
+      "warmup_excluded": true,
+      "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+    },
+    "kokoro": {
+      "count": 300,
+      "wer": 0.12330772045371387,
+      "wer_bootstrap_95_percent_interval": [
+        0.11041587105593896,
+        0.1371551937535493
+      ],
+      "substitutions": 547,
+      "deletions": 57,
+      "insertions": 70,
+      "reference_words": 5466,
+      "dnsmos_p835": {
+        "sig": 3.6394635842123475,
+        "bak": 4.179675258711354,
+        "ovrl": 3.4159892563013767
+      },
+      "rtf_median": 0.7186143637300251,
+      "rtf_p95": 1.745654605897296,
+      "rtf_global": 0.8890925854635423,
+      "generated_seconds": 1982.5249999999985,
+      "synthesis_seconds": 1762.648277996108,
+      "duration_min_seconds": 2.3,
+      "duration_max_seconds": 14.875,
+      "mean_generation_seconds": 5.875494259987026,
+      "max_clipped_fraction": 0.0,
+      "scoring_contract": {
+        "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+        "config_sha256": "e22137c6c95b123f04da0dfbe5a7ae9f2b63f67759fb189104a9a7a589e4bc90",
+        "dnsmos_sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd",
+        "asr": {
+          "repo": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "device": "cuda",
+          "compute_type": "float16",
+          "beam_size": 5,
+          "language": "fr"
+        },
+        "faster_whisper": "1.2.1",
+        "jiwer": "4.0.0",
+        "synthesis_contract_sha256": "d41988f247f1744d4ce53a9c1b6d3ef3f94ea9f69d9c84d20e906acb55de6093",
+        "scoring": "fr-runtime-2 casefold; Unicode word tokens; apostrophes/hyphens split; accents retained"
+      },
+      "status": "COMPLETE",
+      "model": {
+        "sample_rate": 24000,
+        "repo": {
+          "repo": "hexgrad/Kokoro-82M",
+          "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+          "voice": "ff_siwis"
+        },
+        "runtime": "0.9.4",
+        "parameters": 81810022,
+        "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+        "bytes": 327212226
+      },
+      "environment": {
+        "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "threads": 2,
+        "os": "Windows-10-10.0.22631-SP0",
+        "python": "3.11.4",
+        "numpy": "1.26.4",
+        "onnxruntime": "1.20.1",
+        "device": "cpu",
+        "concurrent_gpu_training": true,
+        "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+      },
+      "load_seconds": 10.551816899329424,
+      "peak_process_rss_bytes": 4619108352,
+      "warmup_excluded": true,
+      "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+    },
+    "piper": {
+      "count": 300,
+      "wer": 0.16465422612513722,
+      "wer_bootstrap_95_percent_interval": [
+        0.14907132850648083,
+        0.18177144706597895
+      ],
+      "substitutions": 696,
+      "deletions": 71,
+      "insertions": 133,
+      "reference_words": 5466,
+      "dnsmos_p835": {
+        "sig": 3.5020102060753775,
+        "bak": 4.092482355691403,
+        "ovrl": 3.2481516587357064
+      },
+      "rtf_median": 0.1188108793063451,
+      "rtf_p95": 0.1468261834033394,
+      "rtf_global": 0.11990176674709953,
+      "generated_seconds": 1735.6567800453513,
+      "synthesis_seconds": 208.10831439401954,
+      "duration_min_seconds": 1.7182766439909296,
+      "duration_max_seconds": 13.351473922902494,
+      "mean_generation_seconds": 0.6936943813133984,
+      "max_clipped_fraction": 0.0,
+      "scoring_contract": {
+        "corpus_sha256": "93b14214f067081d0a8b2374a8a0ef803be6f5adb6423e7a0ba668607eedb90a",
+        "config_sha256": "e22137c6c95b123f04da0dfbe5a7ae9f2b63f67759fb189104a9a7a589e4bc90",
+        "dnsmos_sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd",
+        "asr": {
+          "repo": "Systran/faster-whisper-small",
+          "revision": "536b0662742c02347bc0e980a01041f333bce120",
+          "device": "cuda",
+          "compute_type": "float16",
+          "beam_size": 5,
+          "language": "fr"
+        },
+        "faster_whisper": "1.2.1",
+        "jiwer": "4.0.0",
+        "synthesis_contract_sha256": "39abb41b00b53236774d8b5f850942746fbff4bfddb8e9be691dbe92bd10a5fc",
+        "scoring": "fr-runtime-2 casefold; Unicode word tokens; apostrophes/hyphens split; accents retained"
+      },
+      "status": "COMPLETE",
+      "model": {
+        "sample_rate": 22050,
+        "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+        "bytes": 63201294,
+        "repo": {
+          "repo": "rhasspy/piper-voices",
+          "revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+          "file": "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx"
+        },
+        "runtime": "1.8.0",
+        "seed_note": "Piper native ONNX random excitation is not controlled by the Paradis seed."
+      },
+      "environment": {
+        "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+        "threads": 2,
+        "os": "Windows-10-10.0.22631-SP0",
+        "python": "3.11.4",
+        "numpy": "1.26.4",
+        "onnxruntime": "1.20.1",
+        "device": "cpu",
+        "concurrent_gpu_training": true,
+        "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+      },
+      "load_seconds": 3.6653936002403498,
+      "peak_process_rss_bytes": 520851456,
+      "warmup_excluded": true,
+      "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+    }
+  },
+  "timing_contention": "Multiple synthesis/ASR CPU tasks and independent GPU training shared this laptop; not an isolated speed ranking.",
+  "corpus_statistics": {
+    "reference_word_count_min": 6,
+    "reference_word_count_max": 43,
+    "reference_word_count_mean": 18.22,
+    "normalized_characters_min": 31,
+    "normalized_characters_max": 266,
+    "length_bins": {
+      "long": 60,
+      "medium": 180,
+      "short": 60
+    }
+  },
+  "model_inventory": {
+    "kokoro": {
+      "parameters": 81810022,
+      "bytes": 327212226,
+      "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4"
+    },
+    "piper": {
+      "stored_initializer_elements": 15650556,
+      "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+      "count_method": "sum of all ONNX initializer dimensions; includes constants and buffers, not strictly trainable parameters"
+    },
+    "paradis": {
+      "parameters": 8082881,
+      "fp32_onnx_bytes": 32819396,
+      "int8_onnx_bytes": 9186652
+    }
+  },
+  "thread_configuration": "ORT intra_op=2, inter_op=1; Torch intra_op=2. Auxiliary numerical libraries use their defaults."
+}

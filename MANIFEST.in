@@ -1,0 +1,9 @@
+include README.md LICENSE NOTICE pyproject.toml
+include paradis_tts/release_assets.json
+prune tests
+include tests/test_public_api.py
+exclude paradis_tts/inference.py
+exclude paradis_tts/onnx_models.py
+exclude paradis_tts/fricative_probe.py
+exclude paradis_tts/softening_probe.py
+exclude paradis_tts/phase_filter_probe.py

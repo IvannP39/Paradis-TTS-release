@@ -1,0 +1,31 @@
+{
+  "status": "COMPLETE",
+  "count": 300,
+  "model": {
+    "sample_rate": 22050,
+    "model_sha256": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+    "bytes": 63201294,
+    "repo": {
+      "repo": "rhasspy/piper-voices",
+      "revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+      "file": "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx"
+    },
+    "runtime": "1.8.0",
+    "seed_note": "Piper native ONNX random excitation is not controlled by the Paradis seed."
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+    "threads": 2,
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.4",
+    "numpy": "1.26.4",
+    "onnxruntime": "1.20.1",
+    "device": "cpu",
+    "concurrent_gpu_training": true,
+    "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+  },
+  "load_seconds": 3.6653936002403498,
+  "peak_process_rss_bytes": 520851456,
+  "warmup_excluded": true,
+  "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+}

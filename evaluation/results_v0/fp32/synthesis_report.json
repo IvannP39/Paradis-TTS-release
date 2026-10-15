@@ -1,0 +1,41 @@
+{
+  "status": "COMPLETE",
+  "count": 300,
+  "model": {
+    "sample_rate": 24000,
+    "postprocessing": {
+      "phase_lock_frames": 97,
+      "presence_restore": true,
+      "presence_max_gain_db": 2.5,
+      "dynamic_soften_db": 1.0,
+      "upper_soften_db": 1.5,
+      "attack_soften_db": 0.0,
+      "syllable_soften_db": 0.0,
+      "dynamics_smoothing": 0.0,
+      "softening_match_level": true
+    },
+    "parameters": {
+      "decoder": 3851053,
+      "text": 4231828,
+      "total": 8082881
+    },
+    "normalization": "fr-runtime-2",
+    "precision": "fp32",
+    "integer_compute": false
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 7 5800H with Radeon Graphics",
+    "threads": 2,
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.4",
+    "numpy": "1.26.4",
+    "onnxruntime": "1.20.1",
+    "device": "cpu",
+    "concurrent_gpu_training": true,
+    "timing_note": "Shared laptop during independent GPU training; timings are not an isolated performance claim."
+  },
+  "load_seconds": 2.5480222003534436,
+  "peak_process_rss_bytes": 391757824,
+  "warmup_excluded": true,
+  "timing_includes": "Normalization, G2P, model and configured DSP; excludes load and WAV disk write"
+}
