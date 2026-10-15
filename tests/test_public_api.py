@@ -13,6 +13,20 @@ from paradis_tts.api import download_model
 
 
 class PublicAPI(unittest.TestCase):
+    def test_explicit_local_folder_never_downloads_and_legacy_alias_works(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary)
+            (folder/'manifest.json').write_text(json.dumps({'graphs':[]}))
+            with patch('paradis_tts.api.download_model', side_effect=AssertionError('Unexpected download')), patch(
+                    'paradis_tts.onnx_runtime.OnnxTTS.__init__', return_value=None) as init:
+                ParadisTTS(model_folder=folder, local_files_only=True)
+                self.assertEqual(init.call_args.args[0], folder.resolve())
+                ParadisTTS(bundle=folder)
+                with self.assertRaisesRegex(ValueError, 'not both'):
+                    ParadisTTS(bundle=folder, model_folder=folder)
+                with self.assertRaisesRegex(FileNotFoundError, 'manifest.json'):
+                    ParadisTTS(model_folder=folder/'missing')
+
     def test_postprocessing_is_default_and_can_be_disabled(self):
         with tempfile.TemporaryDirectory() as temporary:
             bundle = Path(temporary)

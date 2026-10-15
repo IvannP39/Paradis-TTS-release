@@ -1,15 +1,17 @@
 {
   "release": "v0",
-  "package_version": "0.1.0",
+  "package_version": "0.1.1",
+  "model_repository": "IvannP/Paradis-TTS",
+  "model_revision": "344b51ce29957d79551dbd06dfa43fed114b8a98",
   "variants": {
     "fp32": {
-      "url": "https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts_fp32.zip",
+      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/344b51ce29957d79551dbd06dfa43fed114b8a98/paradis_tts_fp32.zip",
       "sha256": "4726751d5c44768a44231d0e3e91ac162254c4b63c4e5b616884a0a9a44f1baa",
       "bytes": 30212002,
       "onnx_bytes": 32819396
     },
     "int8": {
-      "url": "https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts_int8.zip",
+      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/344b51ce29957d79551dbd06dfa43fed114b8a98/paradis_tts_int8.zip",
       "sha256": "c9d13d84fb9a4f0742c62e3eacdafec508901648857c1aa7267fc1eeb54e1c75",
       "bytes": 8213141,
       "onnx_bytes": 9186652

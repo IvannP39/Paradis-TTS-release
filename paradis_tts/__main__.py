@@ -10,7 +10,7 @@ def main():
     parser=argparse.ArgumentParser(prog='python -m paradis_tts')
     commands=parser.add_subparsers(dest='command',required=True)
     synth=commands.add_parser('synthesize',help='Generate an actual 24 kHz WAV using an ONNX bundle')
-    synth.add_argument('--bundle',type=Path)
+    synth.add_argument('--model-folder','--bundle',dest='model_folder',type=Path)
     synth.add_argument('--variant',choices=('fp32','int8'),default='fp32')
     synth.add_argument('--no-post-traitement',action='store_true')
     text=synth.add_mutually_exclusive_group(required=True)
@@ -35,7 +35,7 @@ def main():
         parser.error('--no-post-traitement cannot be combined with processing settings')
     if args.command=='synthesize':
         from paradis_tts.api import ParadisTTS
-        model=ParadisTTS(args.bundle,threads=args.threads,postprocessing=settings,
+        model=ParadisTTS(model_folder=args.model_folder,threads=args.threads,postprocessing=settings,
                          variant=args.variant,post_traitement=not args.no_post_traitement)
         model.postprocessing=replace(model.postprocessing,**overrides)
         text=args.text if args.text is not None else args.text_file.read_text(encoding='utf-8-sig')

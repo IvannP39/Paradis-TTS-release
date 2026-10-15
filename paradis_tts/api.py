@@ -11,7 +11,7 @@ import zipfile
 from .audio import PostProcessing
 from .onnx_runtime import OnnxTTS
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def _verify(directory):
@@ -25,7 +25,7 @@ def _verify(directory):
 
 
 def download_model(variant='fp32', *, cache_dir=None, local_files_only=False):
-    """Download once from the v0 release; subsequent loads work without a network."""
+    """Download pinned Hugging Face weights once; reuse the verified local cache."""
     if variant not in ('fp32', 'int8'):
         raise ValueError('variant must be fp32 or int8')
     registry = json.loads(Path(__file__).with_name('release_assets.json').read_text(encoding='utf-8'))
@@ -36,7 +36,7 @@ def download_model(variant='fp32', *, cache_dir=None, local_files_only=False):
     if destination.is_dir():
         return _verify(destination)
     if local_files_only:
-        raise FileNotFoundError(f'Model absent from cache: {destination}. Load once online or pass bundle=...')
+        raise FileNotFoundError(f'Model absent from cache: {destination}. Load once online or pass model_folder=...')
     destination.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='download-', dir=destination.parent) as temporary:
         temporary = Path(temporary)
@@ -80,6 +80,8 @@ class ParadisTTS(OnnxTTS):
     sample_rate = 24000
 
     def __new__(cls, bundle=None, *args, **kwargs):
+        if bundle is not None and kwargs.get('model_folder') is not None:
+            raise ValueError('Pass model_folder or bundle, not both')
         # Keep explicitly supplied research bundles usable by existing notebooks.
         if bundle is not None:
             manifest = Path(bundle) / 'manifest.json'
@@ -88,8 +90,16 @@ class ParadisTTS(OnnxTTS):
                 return ResearchTTS(bundle, *args, **kwargs)
         return super().__new__(cls)
 
-    def __init__(self, bundle=None, *, post_traitement=True, variant='fp32', threads=2,
+    def __init__(self, bundle=None, *, model_folder=None, post_traitement=True, variant='fp32', threads=2,
                  cache_dir=None, local_files_only=False, postprocessing=None):
+        """Load model_folder directly, or download variant from Hugging Face.
+
+        model_folder must contain manifest.json and the extracted ONNX graphs.
+        Explicit local paths never fall back to downloading. bundle is a legacy
+        alias retained for existing applications and research notebooks.
+        """
+        if model_folder is not None:
+            bundle = model_folder
         if type(post_traitement) is not bool:
             raise TypeError('post_traitement must be a boolean')
         if not post_traitement and postprocessing is not None:
@@ -98,6 +108,10 @@ class ParadisTTS(OnnxTTS):
             adjacent = Path(__file__).resolve().parent.parent
             bundle = adjacent if (adjacent / 'manifest.json').is_file() else download_model(
                 variant, cache_dir=cache_dir, local_files_only=local_files_only)
+        else:
+            bundle = Path(bundle).expanduser().resolve()
+            if not (bundle / 'manifest.json').is_file():
+                raise FileNotFoundError(f'Local model folder must contain manifest.json: {bundle}')
         if not post_traitement:
             postprocessing = PostProcessing(phase_lock_frames=0, presence_restore=False,
                 dynamic_soften_db=0, upper_soften_db=0, attack_soften_db=0,

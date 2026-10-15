@@ -21,7 +21,7 @@ téléchargement, la synthèse fonctionne entièrement hors ligne.
 Python 3.10–3.12. Installer le wheel public :
 
 ```bash
-python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.0-py3-none-any.whl
+python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.1-py3-none-any.whl
 ```
 
 ```python
@@ -32,7 +32,8 @@ audio = tts("Bonjour tout le monde.")
 tts.save(audio, "bonjour.wav")
 ```
 
-Le premier appel charge les poids FP32 dans le cache. Aucun GPU, PyTorch ni
+La construction de `ParadisTTS()` télécharge les poids FP32 depuis Hugging Face
+et les garde en cache après vérification SHA256. Aucun GPU, PyTorch ni
 Kokoro n'est nécessaire. `audio` est un tableau NumPy mono, `float32`, à 24 kHz.
 Le package est prêt pour PyPI ; l'installation ci-dessus utilise la release
 GitHub et ne suppose pas une publication dans l'index PyPI.
@@ -49,7 +50,7 @@ GitHub et ne suppose pas une publication dans l'index PyPI.
 ```python
 tts = ParadisTTS(variant="int8")
 tts = ParadisTTS(post_traitement=False)  # sortie brute
-tts = ParadisTTS(bundle="chemin/vers/fp32")  # archive locale décompressée
+tts = ParadisTTS(model_folder="chemin/vers/fp32")  # archive locale décompressée
 ```
 
 Le profil audio par défaut associe le filtre de phase 97, une restauration de

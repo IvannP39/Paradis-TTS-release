@@ -1,4 +1,4 @@
-# Package Python v0
+# Package Python 0.1.1 — modèles v0
 
 Python 3.10 à 3.12. Runtime CPU : NumPy, ONNX Runtime, Misaki et eSpeak NG.
 Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
@@ -8,7 +8,7 @@ Le wheel et les sources distribuables sont joints à la
 Tant que le projet n'est pas enregistré sur PyPI, installer le wheel public :
 
 ```bash
-python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.0-py3-none-any.whl
+python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.1-py3-none-any.whl
 ```
 
 ```python
@@ -19,7 +19,7 @@ audio = tts("Bonjour tout le monde.")  # numpy.float32, mono, 24 000 Hz
 tts.save(audio, "bonjour.wav")
 ```
 
-Le premier chargement télécharge le FP32 depuis la release GitHub figée, vérifie
+Le premier chargement télécharge le FP32 depuis Hugging Face, à une révision figée, vérifie
 son SHA256 puis le conserve dans le cache. Les suivants fonctionnent hors ligne.
 La sortie n'est pas jouée automatiquement. Le cache est sous `%LOCALAPPDATA%`
 sur Windows, `~/.cache` ailleurs ; `PARADIS_TTS_CACHE` permet de le déplacer.
@@ -27,10 +27,17 @@ sur Windows, `~/.cache` ailleurs ; `PARADIS_TTS_CACHE` permet de le déplacer.
 ```python
 tts = ParadisTTS(variant="int8")
 tts = ParadisTTS(local_files_only=True)  # échoue si aucun modèle n'est déjà en cache
-tts = ParadisTTS(bundle="chemin/vers/fp32")  # archive décompressée, aucun téléchargement
+tts = ParadisTTS(model_folder="chemin/vers/fp32")  # archive décompressée, aucun téléchargement
 tts = ParadisTTS(post_traitement=False)  # désactive tous les filtres
 tts.to_file("Le TGV part à 18 h 30.", "train.wav", seed=1729, speed=1.0)
 ```
+
+`model_folder` doit pointer vers le dossier décompressé contenant `manifest.json`
+et les graphes ONNX. Ce chemin est utilisé directement, sans réseau ; un chemin
+absent ou invalide provoque une erreur, jamais un téléchargement de remplacement.
+`bundle=...` reste un alias compatible avec les anciennes applications.
+`variant` sert uniquement au téléchargement automatique : le dossier local
+détermine lui-même sa variante. Aucun compte Hugging Face n'est nécessaire.
 
 Traitements par défaut : filtre de phase 97, présence jusqu'à 2,5 dB,
 adoucir les aigus dynamiquement jusqu'à 1 dB, haut du spectre réduit de 1,5 dB.
@@ -54,6 +61,7 @@ internes et reste propre à la synthèse.
 ```bash
 paradis-tts synthesize --text "Bonjour tout le monde." --output bonjour.wav
 paradis-tts synthesize --variant int8 --text "Bonjour." --output bonjour.wav
+paradis-tts synthesize --model-folder chemin/vers/fp32 --text "Bonjour." --output bonjour.wav
 ```
 
 Construire les distributions : `python -m build`, puis
@@ -63,6 +71,10 @@ envoyé à PyPI avec `python -m twine upload dist/*` après authentification du
 propriétaire, ou via le workflow Trusted Publishing fourni. Ne pas ajouter de
 token dans le dépôt. Le package est préparé pour PyPI ; sa présence sur GitHub
 ne signifie pas qu'il est déjà publié dans l'index PyPI.
+
+Pour activer les envois automatiques depuis les releases GitHub, suivre la
+[configuration Trusted Publishing](PYPI_PUBLISHING.md). Après le premier envoi
+réussi, l'installation devient `python -m pip install paradis-tts`.
 
 Compatibilité vérifiée localement : Windows, Python 3.11, CPU AMD Ryzen 7 5800H.
 Les autres plateformes sont ciblées, sans benchmark local revendiqué.
