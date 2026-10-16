@@ -3,6 +3,7 @@
 <p align="center">
   <a href="https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0"><img alt="Release v0" src="https://img.shields.io/badge/release-v0-9ee8cb?style=flat-square"></a>
   <a href="https://huggingface.co/IvannP/Paradis-TTS"><img alt="Hugging Face" src="https://img.shields.io/badge/Hugging_Face-mod%C3%A8les-ffd681?style=flat-square"></a>
+  <a href="https://pypi.org/project/paradis-tts/"><img alt="PyPI" src="https://img.shields.io/pypi/v/paradis-tts?style=flat-square"></a>
   <img alt="CPU et ONNX" src="https://img.shields.io/badge/runtime-CPU_%C2%B7_ONNX-c3dbe6?style=flat-square">
   <a href="https://github.com/IvannP39/Paradis-TTS-release/blob/main/LICENSE"><img alt="Apache 2.0" src="https://img.shields.io/badge/code_%26_poids-Apache_2.0-c3dbe6?style=flat-square"></a>
 </p>
@@ -18,10 +19,10 @@ téléchargement, la synthèse fonctionne entièrement hors ligne.
 
 ## Essayer
 
-Python 3.10–3.12. Installer le wheel public :
+Python 3.10–3.12 :
 
 ```bash
-python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.1-py3-none-any.whl
+python -m pip install paradis-tts
 ```
 
 ```python
@@ -35,8 +36,7 @@ tts.save(audio, "bonjour.wav")
 La construction de `ParadisTTS()` télécharge les poids FP32 depuis Hugging Face
 et les garde en cache après vérification SHA256. Aucun GPU, PyTorch ni
 Kokoro n'est nécessaire. `audio` est un tableau NumPy mono, `float32`, à 24 kHz.
-Le package est prêt pour PyPI ; l'installation ci-dessus utilise la release
-GitHub et ne suppose pas une publication dans l'index PyPI.
+Le package est disponible sur [PyPI](https://pypi.org/project/paradis-tts/).
 
 ## Choisir sa version
 

@@ -3,12 +3,12 @@
 Python 3.10 à 3.12. Runtime CPU : NumPy, ONNX Runtime, Misaki et eSpeak NG.
 Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
 
-Le wheel et les sources distribuables sont joints à la
+Le package est publié sur [PyPI](https://pypi.org/project/paradis-tts/).
+Le wheel et les sources sont aussi joints à la
 [release v0](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0).
-Tant que le projet n'est pas enregistré sur PyPI, installer le wheel public :
 
 ```bash
-python -m pip install https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts-0.1.1-py3-none-any.whl
+python -m pip install paradis-tts
 ```
 
 ```python
@@ -69,12 +69,10 @@ Construire les distributions : `python -m build`, puis
 poids restent dans les assets de release avec SHA256 figés. Le wheel peut être
 envoyé à PyPI avec `python -m twine upload dist/*` après authentification du
 propriétaire, ou via le workflow Trusted Publishing fourni. Ne pas ajouter de
-token dans le dépôt. Le package est préparé pour PyPI ; sa présence sur GitHub
-ne signifie pas qu'il est déjà publié dans l'index PyPI.
+token dans le dépôt. La version 0.1.1 a été publiée via Trusted Publishing.
 
-Pour activer les envois automatiques depuis les releases GitHub, suivre la
-[configuration Trusted Publishing](PYPI_PUBLISHING.md). Après le premier envoi
-réussi, l'installation devient `python -m pip install paradis-tts`.
+Les prochaines releases du package sont publiées automatiquement depuis GitHub,
+voir la [configuration Trusted Publishing](PYPI_PUBLISHING.md).
 
 Compatibilité vérifiée localement : Windows, Python 3.11, CPU AMD Ryzen 7 5800H.
 Les autres plateformes sont ciblées, sans benchmark local revendiqué.

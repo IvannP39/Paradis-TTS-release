@@ -3,6 +3,11 @@
 La publication part du dépôt public `IvannP39/Paradis-TTS-release`.
 Le dépôt privé de développement ne peut pas lancer le job de publication.
 
+Première publication réussie : **0.1.1**, disponible sur
+[PyPI](https://pypi.org/project/paradis-tts/0.1.1/), via le
+[workflow GitHub](https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38862835808).
+La configuration ci-dessous sert de référence pour maintenir cette liaison.
+
 ## Première publication : configuration du compte
 
 Connecté à ton compte PyPI, ouvrir
