@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f0">
+  <title>Paradis — Donnez de la voix à vos mots</title>
+  <style>
+    :root{--ink:#203d34;--muted:#68786f;--paper:#f5f5f0;--line:#e0e4db;--green:#285d49;--mint:#e6eee5;--purple:#8078b8}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+    button,a,input,textarea{-webkit-tap-highlight-color:transparent}button,textarea,a{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:wait;opacity:.55}
+    button:focus-visible,a:focus-visible{outline:3px solid var(--purple);outline-offset:4px}textarea:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+    .shell{max-width:1060px;margin:auto;padding:32px 28px 24px}header{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:25px;letter-spacing:-1px;font-weight:750}.mark{display:flex;align-items:center;gap:3px;height:30px;padding:7px 8px;background:var(--green);border-radius:10px}.mark i{display:block;background:#eff5d9;width:3px;border-radius:2px;height:11px}.mark i:nth-child(2){height:19px}.mark i:nth-child(3){height:14px}
+    .header-links{display:flex;gap:20px}.header-links a{font-size:13px;color:var(--muted);text-decoration:none}.header-links a:hover{color:var(--green);text-decoration:underline}
+    .intro{text-align:center;padding:53px 10px 30px}.eyebrow{text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--green);display:flex;align-items:center;justify-content:center;gap:8px}.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+    h1{font-size:clamp(32px,5vw,49px);font-weight:650;letter-spacing:-2px;line-height:1.14;margin:15px 0}h1 em{font-family:Georgia,serif;font-weight:400;color:var(--purple)}.intro p{font-size:15px;color:var(--muted);max-width:540px;margin:0 auto}
+    .studio{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 16px 48px #203d3408;overflow:hidden}.studio-top{padding:17px 25px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .studio-label{font-size:13px;font-weight:650}.status{font-size:12px;display:flex;align-items:center;gap:7px;color:var(--muted)}.dot{width:7px;height:7px;border-radius:50%;background:#bba56e;flex-shrink:0}.status[data-state=ready] .dot{background:#568964}.status[data-state=error] .dot{background:#b95f54}
+    .columns{display:grid;grid-template-columns:1.12fr 1fr}.editor{padding:27px;border-right:1px solid var(--line)}label{display:block;font-size:13px;font-weight:650;margin-bottom:12px}textarea{width:100%;height:181px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:#fcfcf9;padding:16px;color:var(--ink);font-size:17px;line-height:1.65;min-height:125px;max-height:400px}
+    .counter{font-size:11px;text-align:right;color:var(--muted);margin:5px 0 17px}.example-label{font-size:11px;color:var(--muted);margin:0 0 8px}.examples{display:flex;gap:6px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:7px;padding:6px 9px;background:white;font-size:11px;color:var(--muted)}.chip:hover{background:var(--mint);border-color:#bdcebe;color:var(--green)}
+    .actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:24px}.generate{display:flex;align-items:center;justify-content:center;gap:10px;color:#fff;background:var(--green);border:0;padding:12px 18px;border-radius:9px;font-size:13px;font-weight:650;min-height:46px}.generate:hover:not(:disabled){background:#1b4736}.generate svg{width:16px;height:16px}.shortcut{font-size:10px;color:var(--muted)}kbd{font:inherit;border:1px solid var(--line);border-radius:4px;padding:2px 4px}
+    .output{padding:27px;display:flex;flex-direction:column;min-width:0}.output-title{font-size:13px;font-weight:650;margin:0}.wave-area{position:relative;background:#f4f5ef;border:1px solid #e8eadf;border-radius:12px;height:117px;margin-top:16px;overflow:hidden;display:flex;align-items:center;justify-content:center}canvas{width:100%;height:100%;display:block}.wave-caption{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);background:#f4f5efcc}.wave-caption[hidden]{display:none}
+    audio{width:100%;height:38px;margin:13px 0 0;display:block}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}.metric strong{font-size:22px;font-weight:600;letter-spacing:-.8px;display:block;white-space:nowrap}.metric span{display:block;font-size:10px;color:var(--muted);margin-top:2px}.download{font-size:12px;color:var(--green);font-weight:600;margin-top:auto;padding-top:22px;align-self:flex-start;text-decoration:none}.download:hover{text-decoration:underline}.download[hidden]{display:none}
+    .studio-bottom{border-top:1px solid var(--line);background:#fafbf7;padding:12px 25px;display:flex;justify-content:space-between;gap:10px;font-size:10px;color:var(--muted)}.features{display:flex;gap:15px;flex-wrap:wrap}.features span::before{content:"✦";color:#849c78;margin-right:5px}
+    .notice{font-size:12px;color:var(--muted);margin:13px 3px 0;min-height:20px}.notice.error{color:#a03e34}.explanation{display:flex;gap:8px;color:var(--muted);font-size:11px;max-width:670px;text-align:center;margin:19px auto 0;justify-content:center}footer{display:flex;justify-content:space-between;gap:14px;margin-top:39px;padding-top:17px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}footer a{color:inherit;text-decoration:none}footer a:hover{text-decoration:underline}
+    .busy .generate svg{animation:pulse 1s ease-in-out infinite}.busy .wave-caption{animation:pulse 1.5s ease-in-out infinite}@keyframes pulse{50%{opacity:.4}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+    @media(max-width:700px){.shell{padding:22px 16px}.header-links{gap:13px}.intro{padding:40px 0 25px}h1{letter-spacing:-1.4px}.columns{grid-template-columns:1fr}.editor{border-right:0;border-bottom:1px solid var(--line);padding:22px}.output{padding:22px}.studio-top{padding:15px 20px}.studio-bottom{padding:12px 20px;flex-direction:column;gap:5px}.shortcut{display:none}.intro p{font-size:14px}.download{padding-top:18px}footer{margin-top:26px}.status{font-size:11px}.studio-label{font-size:12px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>paradis<span style="color:var(--purple)">.</span></div><nav class="header-links" aria-label="Liens du projet"><a href="https://github.com/IvannP39/Paradis-TTS-release" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://huggingface.co/IvannP/Paradis-TTS" target="_blank" rel="noopener noreferrer">Hugging Face ↗</a></nav></header>
+    <main>
+      <section class="intro"><div class="eyebrow">Le français, tout simplement</div><h1>Vos mots prennent <em>voix.</em></h1><p>Écrivez une phrase. Écoutez Paradis lui donner vie.<br>Une voix française légère, qui tourne sur votre ordinateur.</p></section>
+      <section class="studio" aria-label="Studio de synthèse vocale">
+        <div class="studio-top"><span class="studio-label">Le petit studio</span><span class="status" id="status" data-state="loading" role="status"><span class="dot"></span><span id="status-text">Chargement du modèle…</span></span></div>
+        <div class="columns">
+          <form class="editor" id="form"><label for="text">Que voulez-vous entendre ?</label><textarea id="text" name="text" maxlength="1000" spellcheck="true" lang="fr" required>Bonjour ! Prenez un instant pour écouter cette voix. Quelques mots suffisent pour découvrir Paradis.</textarea><div class="counter"><span id="count">0</span> / 1 000 caractères</div><p class="example-label">Ou laissez-vous inspirer</p><div class="examples"><button class="chip" type="button" data-example="welcome">Une présentation</button><button class="chip" type="button" data-example="story">Une petite histoire</button><button class="chip" type="button" data-example="numbers">Des chiffres et des lettres</button></div><div class="actions"><button class="generate" id="generate" type="submit" disabled><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M7 3v14l11-7z"/></svg><span id="generate-label">Générer la voix</span></button><span class="shortcut"><kbd>Ctrl</kbd> + <kbd>Entrée</kbd></span></div></form>
+          <div class="output"><h2 class="output-title">Votre écoute</h2><div class="wave-area"><canvas id="wave" aria-hidden="true"></canvas><div class="wave-caption" id="wave-caption">Votre voix apparaîtra ici</div></div><audio id="audio" controls preload="metadata" aria-label="Écouter la voix générée"></audio><div class="metrics" aria-live="polite"><div class="metric"><strong id="generation">—</strong><span>Temps de génération</span></div><div class="metric"><strong id="duration">—</strong><span>Durée de l’audio</span></div><div class="metric"><strong id="speed">—</strong><span>Vitesse / temps réel</span></div></div><a class="download" id="download" download="paradis.wav" hidden>Télécharger le WAV ↓</a></div>
+        </div><div class="studio-bottom"><div class="features"><span>Français</span><span>24 kHz</span><span>Post-traitement inclus</span></div><span>8,08 M de paramètres · FP32 · CPU</span></div>
+      </section>
+      <p id="notice" class="notice" role="status">Premier lancement : le téléchargement du modèle peut prendre un instant. Sa progression s’affiche dans le terminal.</p>
+      <p class="explanation">Le temps de génération inclut la préparation du texte et les filtres audio. Il exclut le chargement initial du modèle et le transfert vers le navigateur.</p>
+    </main>
+    <footer><span>Imaginé et développé par Ivann.</span><a href="https://github.com/IvannP39/Paradis-TTS-release" target="_blank" rel="noopener noreferrer">Paradis-TTS · Open source ↗</a></footer>
+  </div>
+  <script>
+    const $ = id => document.getElementById(id);
+    const form = $('form'), text = $('text'), button = $('generate'), player = $('audio');
+    const examples = {
+      welcome: "Bonjour ! Je suis Paradis, une voix française qui tient dans un tout petit modèle. Et si nous faisions connaissance ?",
+      story: "Ce matin-là, une lumière dorée traversait les volets. Au bout du jardin, un chat attendait patiemment que la maison se réveille.",
+      numbers: "Le train pour Paris part à 18 h 30. Deux billets coûtent 45 euros. Il vous reste dix minutes pour rejoindre le quai."
+    };
+    let ready = false, busy = false, audioURL = null, decoded = null, audioContext = null;
+    const seconds = value => value.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' s';
+    function message(value, error = false) { $('notice').textContent = value; $('notice').classList.toggle('error', error); }
+    function sync() { $('count').textContent = text.value.length.toLocaleString('fr-FR'); button.disabled = !ready || busy || !text.value.trim(); }
+    text.addEventListener('input', sync);
+    document.querySelectorAll('[data-example]').forEach(chip => chip.addEventListener('click', () => {text.value = examples[chip.dataset.example]; sync(); text.focus();}));
+    text.addEventListener('keydown', event => {if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {event.preventDefault(); if (!button.disabled) form.requestSubmit();}});
+    async function poll() {
+      try {
+        const response = await fetch('/api/status'); if (!response.ok) throw Error('Le serveur ne répond pas.');
+        const info = await response.json(); $('status').dataset.state = info.state;
+        if (info.state === 'ready') {ready = true; $('status-text').textContent = 'Prêt à parler'; message('Tout est prêt. À vous de jouer.'); sync(); return;}
+        if (info.state === 'error') {$('status-text').textContent = 'Chargement impossible'; message(info.error + ' — Corrigez le problème puis relancez la démo.', true); return;}
+      } catch (error) {message('Connexion au serveur interrompue. Vérifiez que le terminal de la démo est ouvert.', true);}
+      setTimeout(poll, 1500);
+    }
+    function drawWave() {
+      const canvas = $('wave'), width = canvas.clientWidth, height = canvas.clientHeight, scale = window.devicePixelRatio || 1;
+      canvas.width = width * scale; canvas.height = height * scale;
+      const ctx = canvas.getContext('2d'); ctx.scale(scale, scale);
+      if (!decoded) return;
+      const samples = decoded.getChannelData(0), bars = Math.max(1, Math.floor((width-32)/5));
+      ctx.fillStyle = '#698d78';
+      for (let i=0; i<bars; i++) {
+        const start = Math.floor(i*samples.length/bars), end = Math.floor((i+1)*samples.length/bars);
+        let peak = 0; for (let j=start; j<end; j++) peak = Math.max(peak, Math.abs(samples[j]));
+        const barHeight = Math.max(3, Math.min(height-26, peak*(height-26)));
+        ctx.fillRect(16+i*5, (height-barHeight)/2, 3, barHeight);
+      }
+    }
+    window.addEventListener('resize', drawWave);
+    form.addEventListener('submit', async event => {
+      event.preventDefault(); if (busy || !ready || !text.value.trim()) return;
+      busy = true; sync(); document.body.classList.add('busy'); $('generate-label').textContent = 'Génération en cours…';
+      $('wave-caption').hidden = false; $('wave-caption').textContent = 'Paradis prépare votre voix…';
+      player.pause(); message('Génération de votre phrase en cours…');
+      // Resume during the user gesture; browsers may otherwise block decoding/playback.
+      try {audioContext ||= new (window.AudioContext || window.webkitAudioContext)(); await audioContext.resume();} catch (_) {}
+      try {
+        const response = await fetch('/api/synthesize', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({text:text.value})});
+        const result = await response.json(); if (!response.ok) throw Error(result.error || 'La génération a échoué.');
+        const bytes = Uint8Array.from(atob(result.audio), c => c.charCodeAt(0));
+        if (audioURL) URL.revokeObjectURL(audioURL);
+        audioURL = URL.createObjectURL(new Blob([bytes], {type:'audio/wav'}));
+        player.src = audioURL; $('download').href = audioURL; $('download').hidden = false;
+        $('generation').textContent = seconds(result.generation_seconds); $('duration').textContent = seconds(result.audio_seconds);
+        $('speed').textContent = result.realtime_speed.toLocaleString('fr-FR', {maximumFractionDigits:1}) + '×';
+        decoded = null;
+        try {if (audioContext) decoded = await audioContext.decodeAudioData(bytes.buffer.slice(0));} catch (_) {}
+        drawWave(); $('wave-caption').hidden = true; message('Votre audio est prêt. Bonne écoute !');
+        try {await player.play();} catch (_) {message('Votre audio est prêt. Appuyez sur lecture pour l’écouter.');}
+      } catch (error) {
+        message(error instanceof TypeError ? 'Connexion interrompue. Vérifiez le terminal puis réessayez.' : error.message, true);
+        $('wave-caption').textContent = audioURL ? 'Votre écoute précédente reste disponible' : 'Essayez une autre phrase';
+      } finally {
+        busy = false; sync(); document.body.classList.remove('busy'); $('generate-label').textContent = 'Générer la voix';
+      }
+    });
+    window.addEventListener('pagehide', () => {if (audioURL) URL.revokeObjectURL(audioURL);});
+    sync(); poll();
+  </script>
+</body>
+</html>

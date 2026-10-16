@@ -48,6 +48,13 @@ La progression du téléchargement et les étapes de chargement s'affichent par
 défaut. Pour un chargement silencieux : `ParadisTTS(verbose=False)`.
 Le package v0.1.4 réutilise les modèles v0.1.3 et leur cache.
 
+### Essayer avec une interface
+
+Le dossier [demo](https://github.com/IvannP39/Paradis-TTS-release/tree/main/demo)
+contient un petit studio local : saisie du texte, lecteur audio, téléchargement
+WAV et temps de génération. Dans ce dossier, lancer `python lancer.py` ;
+l'installation et l'ouverture du navigateur sont automatiques.
+
 ## Choisir sa version
 
 | | FP32 | INT8 |
