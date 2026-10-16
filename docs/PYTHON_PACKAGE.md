@@ -1,11 +1,15 @@
-# Package Python 0.1.2 — modèles v0.1.2
+# Package Python 0.1.3 — modèles v0.1.3
+
+La 0.1.3 optimise les filtres et désactive l'adoucissement dynamique après
+validation à l'écoute le 16 octobre 2026. Les poids neuronaux restent identiques
+à la 0.1.2 : moyenne EMA finale à 10 000 étapes. Les anciennes releases sont conservées.
 
 Python 3.10 à 3.12. Runtime CPU : NumPy, ONNX Runtime, Misaki et eSpeak NG.
 Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
 
 Le package est publié sur [PyPI](https://pypi.org/project/paradis-tts/).
 Le wheel et les sources sont aussi joints à la
-[release v0.1.2](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.2).
+[release v0.1.3](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.3).
 
 ```bash
 python -m pip install paradis-tts
@@ -44,16 +48,20 @@ de continuation. `weight_kind="ema"` la sélectionne aussi explicitement.
 Les caches sont séparés par release, type de poids et précision : une mise à
 jour vers 0.1.2 ne réutilise pas les anciens poids v0 du cache.
 
-Traitements par défaut : filtre de phase 97, présence jusqu'à 2,5 dB,
-adoucir les aigus dynamiquement jusqu'à 1 dB, haut du spectre réduit de 1,5 dB.
+Traitements par défaut depuis 0.1.3 : filtre de phase 97, présence
+jusqu'à 2,5 dB, haut du spectre réduit de 1,5 dB. L'adoucissement dynamique
+est désactivé à 0 dB, y compris avec les archives antérieures qui indiquent 1 dB.
 La réduction des attaques, des syllabes fortes et le lissage sont à zéro.
-Le profil local `postprocessing.json` permet de régler ces valeurs.
+Le profil local `postprocessing.json` conserve les autres réglages. Passer
+explicitement `postprocessing=PostProcessing(...)` (ou charger ce profil avec
+`PostProcessing.from_file(...)`) permet de demander un réglage personnalisé,
+y compris de réactiver l'adoucissement dynamique.
 
 ```python
 from paradis_tts import ParadisTTS, PostProcessing
 
 tts = ParadisTTS(postprocessing=PostProcessing(
-    dynamic_soften_db=1.0, upper_soften_db=1.5,
+    dynamic_soften_db=0.0, upper_soften_db=1.5,
     attack_soften_db=0.5, syllable_soften_db=0.0, dynamics_smoothing=0.5,
 ))
 ```

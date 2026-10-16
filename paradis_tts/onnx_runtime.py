@@ -95,6 +95,10 @@ class OnnxTTS:
         self.postprocessing=postprocessing or (PostProcessing.from_file(settings_path) if settings_path.exists()
                                                else PostProcessing(**self.manifest['inference_defaults']))
         if not isinstance(self.postprocessing,PostProcessing): raise ValueError('Expected PostProcessing settings')
+        if postprocessing is None:
+            # The accepted default no longer uses dynamic softening, including
+            # when an older, immutable model archive records the previous 1 dB.
+            self.postprocessing=replace(self.postprocessing,dynamic_soften_db=0.)
 
     def synthesize(self,text,*,seed=1729,speed=1.):
         if not np.isfinite(speed) or not .5<=speed<=2: raise ValueError('speed must be between 0.5 and 2')

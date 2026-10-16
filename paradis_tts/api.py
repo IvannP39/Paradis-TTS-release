@@ -1,5 +1,6 @@
 """Public CPU API and integrity-checked, versioned model cache."""
 import hashlib
+from http.client import HTTPException
 import json
 import os
 from pathlib import Path
@@ -11,7 +12,7 @@ import zipfile
 from .audio import PostProcessing
 from .onnx_runtime import OnnxTTS
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 def _verify(directory):
@@ -55,15 +56,33 @@ def download_model(variant='fp32', *, weight_kind=None, cache_dir=None, local_fi
         temporary = Path(temporary)
         archive_path = temporary / 'model.zip'
         request = urllib.request.Request(asset['url'], headers={'User-Agent': 'Paradis-TTS/' + __version__})
-        digest = hashlib.sha256()
-        size = 0
-        with urllib.request.urlopen(request, timeout=60) as response, archive_path.open('wb') as output:
-            while block := response.read(1024 * 1024):
-                size += len(block)
-                if size > 100 * 1024 * 1024:
-                    raise ValueError('Unexpectedly large model archive')
-                digest.update(block)
-                output.write(block)
+        def store(source):
+            digest = hashlib.sha256()
+            size = 0
+            with archive_path.open('wb') as output:
+                while block := source.read(1024 * 1024):
+                    size += len(block)
+                    if size > 100 * 1024 * 1024:
+                        raise ValueError('Unexpectedly large model archive')
+                    digest.update(block)
+                    output.write(block)
+            return size, digest
+        size, digest = 0, hashlib.sha256()
+        failed = False
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                size, digest = store(response)
+        except (OSError, HTTPException):
+            failed = True
+        if failed or size == 0 or size != asset.get('bytes', size):
+            # The official client also supports Xet/CAS when the CDN closes a
+            # direct HTTP transfer early. Keep independent SHA256 validation.
+            from huggingface_hub import hf_hub_download
+            downloaded = hf_hub_download(repo_id=registry['model_repository'],
+                filename=asset['url'].rsplit('/',1)[1], revision=registry['model_revision'],
+                cache_dir=temporary/'hub', token=False)
+            with Path(downloaded).open('rb') as source:
+                size, digest = store(source)
         if digest.hexdigest() != asset['sha256']:
             raise ValueError('Downloaded archive checksum mismatch')
         extracted = temporary / 'model'

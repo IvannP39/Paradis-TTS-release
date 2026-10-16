@@ -37,6 +37,18 @@ jobs:
           python -m pip install dist/*.whl
           cd "$RUNNER_TEMP"
           python -I "$GITHUB_WORKSPACE/tests/test_public_api.py"
+      - name: Check real model download and default speech synthesis
+        working-directory: ${{ runner.temp }}
+        run: |
+          python -I - <<'PY'
+          import numpy as np
+          from paradis_tts import ParadisTTS
+          model = ParadisTTS()
+          audio = model("Bonjour tout le monde.")
+          assert model.postprocessing.dynamic_soften_db == 0
+          assert audio.ndim == 1 and len(audio) > 24000 and np.isfinite(audio).all()
+          print("Pinned model download and CPU synthesis passed", len(audio))
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: distributions

@@ -1,0 +1,363 @@
+{
+  "status": "COMPLETE",
+  "measurements": 640,
+  "unique_sentences": 40,
+  "rounds": 4,
+  "date": "2026-10-16",
+  "cpu": "AMD Ryzen 7 5800H, 8 physical cores / 16 logical processors; two configured threads per engine",
+  "engines": {
+    "paradis_fp32": {
+      "name": "Paradis 0.1.2 EMA FP32 (filtres optimisés, dynamique désactivée)",
+      "runtime": "ONNX Runtime 1.20.1",
+      "unique_sentences": 40,
+      "measurements": 160,
+      "rtf_global": 0.06948115718568701,
+      "rtf_95_percent_interval": [
+        0.06869437867996739,
+        0.0704332180316892
+      ],
+      "realtime_factor": 14.392391268434404,
+      "seconds_to_generate_10_seconds": 0.6948115718568701,
+      "median_phrase_seconds": 0.422482100315392,
+      "p95_phrase_seconds": 0.7091540253255512,
+      "rtf_median": 0.06841564342762901,
+      "total_synthesis_seconds": 71.2112379996106,
+      "total_audio_seconds": 1024.8999999999999,
+      "per_round_global_rtf": [
+        0.07238321670373137,
+        0.06859625641433584,
+        0.06895380505923238,
+        0.06799135056544846
+      ],
+      "min_available_memory_mib": 3644.2734375,
+      "max_peak_process_rss_mib": 323.7578125,
+      "max_background_cpu_percent_estimate": 0.8007200443416447,
+      "max_clipped_fraction": 0.0
+    },
+    "paradis_int8": {
+      "name": "Paradis 0.1.2 EMA INT8 (filtres optimisés, dynamique désactivée)",
+      "runtime": "ONNX Runtime 1.20.1",
+      "unique_sentences": 40,
+      "measurements": 160,
+      "rtf_global": 0.06949474081606859,
+      "rtf_95_percent_interval": [
+        0.06878610322196423,
+        0.07030577847220225
+      ],
+      "realtime_factor": 14.389578092631433,
+      "seconds_to_generate_10_seconds": 0.6949474081606859,
+      "median_phrase_seconds": 0.4210676997900009,
+      "p95_phrase_seconds": 0.7271502702496944,
+      "rtf_median": 0.06846750479330566,
+      "total_synthesis_seconds": 71.32245249953121,
+      "total_audio_seconds": 1026.3000000000002,
+      "per_round_global_rtf": [
+        0.07171276664595665,
+        0.06832404676862922,
+        0.06980246204629136,
+        0.06813968780339726
+      ],
+      "min_available_memory_mib": 3696.8359375,
+      "max_peak_process_rss_mib": 252.8828125,
+      "max_background_cpu_percent_estimate": 0.8495400103961886,
+      "max_clipped_fraction": 0.0
+    },
+    "kokoro_fr": {
+      "name": "Kokoro-82M ff_siwis",
+      "runtime": "PyTorch 2.6.0+cpu",
+      "unique_sentences": 40,
+      "measurements": 160,
+      "rtf_global": 0.592353862972699,
+      "rtf_95_percent_interval": [
+        0.5875317813691943,
+        0.5963656777813872
+      ],
+      "realtime_factor": 1.6881800938742069,
+      "seconds_to_generate_10_seconds": 5.923538629726989,
+      "median_phrase_seconds": 3.6378254503943026,
+      "p95_phrase_seconds": 6.1391438053920835,
+      "rtf_median": 0.5907544558135203,
+      "total_synthesis_seconds": 608.6435942044482,
+      "total_audio_seconds": 1027.5,
+      "per_round_global_rtf": [
+        0.6020070158615891,
+        0.5871667721773296,
+        0.5944154055449214,
+        0.5858262583069557
+      ],
+      "min_available_memory_mib": 1555.10546875,
+      "max_peak_process_rss_mib": 2559.69140625,
+      "max_background_cpu_percent_estimate": 1.639101931378278,
+      "max_clipped_fraction": 0.0
+    },
+    "piper_fr": {
+      "name": "Piper fr_FR-siwis-medium",
+      "runtime": "ONNX Runtime 1.20.1",
+      "unique_sentences": 40,
+      "measurements": 160,
+      "rtf_global": 0.05700137775790466,
+      "rtf_95_percent_interval": [
+        0.05667204277321748,
+        0.05736044860311291
+      ],
+      "realtime_factor": 17.543435603384605,
+      "seconds_to_generate_10_seconds": 0.5700137775790466,
+      "median_phrase_seconds": 0.30627274978905916,
+      "p95_phrase_seconds": 0.5102879206649954,
+      "rtf_median": 0.05645496447720293,
+      "total_synthesis_seconds": 52.05863189417869,
+      "total_audio_seconds": 913.2872562358277,
+      "per_round_global_rtf": [
+        0.0582573458210971,
+        0.057019132358123184,
+        0.056274959409018166,
+        0.05646173939275456
+      ],
+      "min_available_memory_mib": 4173.421875,
+      "max_peak_process_rss_mib": 411.93359375,
+      "max_background_cpu_percent_estimate": 2.0857856533304147,
+      "max_clipped_fraction": 0.0
+    }
+  },
+  "models": {
+    "kokoro": {
+      "repo": "hexgrad/Kokoro-82M",
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "voice": "ff_siwis",
+      "sha256": {
+        "config.json": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+        "kokoro-v1_0.pth": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+        "voices/ff_siwis.pt": "8073bf2d2c4b9543a90f2f0fd2144de4ed157e2d4b79ddeb0d5123066171fbc9"
+      }
+    },
+    "piper": {
+      "repo": "rhasspy/piper-voices",
+      "revision": "c10ece1aade47bb51c153c893d14e5bf8e5b7117",
+      "file": "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx",
+      "sha256": {
+        "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx": "641d1ab097da2b81128c076810edb052b385decc8be3381814802a64a73baf99",
+        "fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx.json": "39479916c2db192b5ac9764daddd0c744d83e023ad890c6976c0633ae4df8959"
+      }
+    }
+  },
+  "paradis": {
+    "release": "v0.1.3",
+    "weights": "Final EMA step 10000, unchanged from v0.1.2",
+    "measured_runtime_version_metadata": "0.1.2",
+    "audio_code_sha256": "3453ac93485d5668d2aa39f73e9733b91961521f367a09a90a5bd27106a42ecd",
+    "onnx_runtime_sha256": "a0e5b6c014e609674af01abda0f97ab949c535b8da8e9ad6cb299c353012fa0b",
+    "note": "Release candidate with the same audio code and neural weights as v0.1.3. Only package version and distribution metadata changed after measurement.",
+    "postprocessing": {
+      "phase_lock_frames": 97,
+      "presence_restore": true,
+      "presence_max_gain_db": 2.5,
+      "dynamic_soften_db": 0.0,
+      "upper_soften_db": 1.5,
+      "attack_soften_db": 0.0,
+      "syllable_soften_db": 0.0,
+      "dynamics_smoothing": 0.0,
+      "softening_match_level": true
+    },
+    "manifests": {
+      "paradis_fp32": "9f21d5b094bc1a3ccc71e4b9df0e6650e299866d236dd7ce90d8d129eb1fd54d",
+      "paradis_int8": "f7bd25eea9d1d0831a38e887972fa843df0aa2fd22f3527109afea112cd5be33"
+    }
+  },
+  "protocol": {
+    "threads": 2,
+    "strata": {
+      "short": 8,
+      "medium": 24,
+      "long": 8
+    },
+    "sentence_sha256": "bb5b70f4898595aa8e772aebcad83cd54edc7308a2b0417c1e00e144b0295b32",
+    "engine_order": [
+      [
+        "paradis_int8",
+        "paradis_fp32",
+        "kokoro_fr",
+        "piper_fr"
+      ],
+      [
+        "paradis_fp32",
+        "kokoro_fr",
+        "piper_fr",
+        "paradis_int8"
+      ],
+      [
+        "kokoro_fr",
+        "piper_fr",
+        "paradis_int8",
+        "paradis_fp32"
+      ],
+      [
+        "piper_fr",
+        "paradis_int8",
+        "paradis_fp32",
+        "kokoro_fr"
+      ]
+    ],
+    "timing": "Complete text-to-float32-array call: internal normalization, French G2P, neural inference and engine postprocessing. Common text normalization is precomputed for every engine. Model loading, downloads, three warmups, checks and WAV writes are excluded.",
+    "execution": "One engine process at a time on CPU; 2 intra-op / 1 inter-op threads; BLAS/OpenMP limited to 2. Four cyclic model orders balance each engine position. Same shuffled sentence order within each round.",
+    "uncertainty": "Stratified paired sentence-cluster bootstrap, 3000 draws, seed 20261016; repetitions stay together. Does not cover other machines, operating conditions or model quality.",
+    "limits": "French mono-voice CPU pipelines, native sample rates. Kokoro uses its official PyTorch runtime; Piper/Paradis use ONNX Runtime. Runtime differences are part of this measurement; not a parameter-only architecture comparison. The same normalized text is supplied to all engines, but generated audio durations can differ. No GPU synthesis, ASR scoring or overlapping benchmark process."
+  },
+  "blocks": [
+    {
+      "engine": "paradis_fp32",
+      "round": 1,
+      "count": 40,
+      "peak_rss_bytes": 323198976,
+      "background_cpu_percent_estimate": 0.7415127024010987,
+      "min_system_available_memory_bytes": 3821297664,
+      "load_seconds_excluded": 1.4419601997360587
+    },
+    {
+      "engine": "paradis_fp32",
+      "round": 2,
+      "count": 40,
+      "peak_rss_bytes": 339484672,
+      "background_cpu_percent_estimate": 0.35520281041686685,
+      "min_system_available_memory_bytes": 4474208256,
+      "load_seconds_excluded": 3.9074488999322057
+    },
+    {
+      "engine": "paradis_fp32",
+      "round": 3,
+      "count": 40,
+      "peak_rss_bytes": 333996032,
+      "background_cpu_percent_estimate": 0.6570647515629487,
+      "min_system_available_memory_bytes": 4446593024,
+      "load_seconds_excluded": 1.48636220023036
+    },
+    {
+      "engine": "paradis_fp32",
+      "round": 4,
+      "count": 40,
+      "peak_rss_bytes": 330629120,
+      "background_cpu_percent_estimate": 0.8007200443416447,
+      "min_system_available_memory_bytes": 4485046272,
+      "load_seconds_excluded": 1.462092699483037
+    },
+    {
+      "engine": "paradis_int8",
+      "round": 1,
+      "count": 40,
+      "peak_rss_bytes": 254603264,
+      "background_cpu_percent_estimate": 0.5194406939035487,
+      "min_system_available_memory_bytes": 3876413440,
+      "load_seconds_excluded": 1.492624399252236
+    },
+    {
+      "engine": "paradis_int8",
+      "round": 2,
+      "count": 40,
+      "peak_rss_bytes": 265125888,
+      "background_cpu_percent_estimate": 0.5730050756247531,
+      "min_system_available_memory_bytes": 4615548928,
+      "load_seconds_excluded": 1.5793938003480434
+    },
+    {
+      "engine": "paradis_int8",
+      "round": 3,
+      "count": 40,
+      "peak_rss_bytes": 265166848,
+      "background_cpu_percent_estimate": 0.8495400103961886,
+      "min_system_available_memory_bytes": 4520091648,
+      "load_seconds_excluded": 1.4622905999422073
+    },
+    {
+      "engine": "paradis_int8",
+      "round": 4,
+      "count": 40,
+      "peak_rss_bytes": 258240512,
+      "background_cpu_percent_estimate": 0.345855094134054,
+      "min_system_available_memory_bytes": 4528513024,
+      "load_seconds_excluded": 1.4975820994004607
+    },
+    {
+      "engine": "kokoro_fr",
+      "round": 1,
+      "count": 40,
+      "peak_rss_bytes": 2684030976,
+      "background_cpu_percent_estimate": 1.639101931378278,
+      "min_system_available_memory_bytes": 1630646272,
+      "load_seconds_excluded": 7.046588599681854
+    },
+    {
+      "engine": "kokoro_fr",
+      "round": 2,
+      "count": 40,
+      "peak_rss_bytes": 2601627648,
+      "background_cpu_percent_estimate": 0.5223887237734327,
+      "min_system_available_memory_bytes": 2254876672,
+      "load_seconds_excluded": 12.108727199956775
+    },
+    {
+      "engine": "kokoro_fr",
+      "round": 3,
+      "count": 40,
+      "peak_rss_bytes": 2638962688,
+      "background_cpu_percent_estimate": 0.6982623418698668,
+      "min_system_available_memory_bytes": 2153902080,
+      "load_seconds_excluded": 6.795920100063086
+    },
+    {
+      "engine": "kokoro_fr",
+      "round": 4,
+      "count": 40,
+      "peak_rss_bytes": 2616565760,
+      "background_cpu_percent_estimate": 0.5839500189494543,
+      "min_system_available_memory_bytes": 2298224640,
+      "load_seconds_excluded": 6.518400699831545
+    },
+    {
+      "engine": "piper_fr",
+      "round": 1,
+      "count": 40,
+      "peak_rss_bytes": 402616320,
+      "background_cpu_percent_estimate": 2.0857856533304147,
+      "min_system_available_memory_bytes": 4410155008,
+      "load_seconds_excluded": 1.2704924996942282
+    },
+    {
+      "engine": "piper_fr",
+      "round": 2,
+      "count": 40,
+      "peak_rss_bytes": 431943680,
+      "background_cpu_percent_estimate": 0.7332429780797847,
+      "min_system_available_memory_bytes": 4417146880,
+      "load_seconds_excluded": 1.212478400208056
+    },
+    {
+      "engine": "piper_fr",
+      "round": 3,
+      "count": 40,
+      "peak_rss_bytes": 406536192,
+      "background_cpu_percent_estimate": 0.5103241374620459,
+      "min_system_available_memory_bytes": 4376150016,
+      "load_seconds_excluded": 1.2262591999024153
+    },
+    {
+      "engine": "piper_fr",
+      "round": 4,
+      "count": 40,
+      "peak_rss_bytes": 404496384,
+      "background_cpu_percent_estimate": 1.1192517518335383,
+      "min_system_available_memory_bytes": 4380909568,
+      "load_seconds_excluded": 1.2662471998482943
+    }
+  ],
+  "audit": {
+    "status": "UPDATED_FRENCH_SPEED_AUDIT_PASS",
+    "measurements": 640,
+    "complete_blocks": 16,
+    "all_models_french": true,
+    "paradis_dynamic_softening_disabled": true,
+    "source_snapshot_matches_working_code": true,
+    "same_sentences_as_previous": true,
+    "no_clipped_output": true,
+    "max_background_cpu_percent_estimate": 2.0857856533304147,
+    "minimum_available_memory_mib": 1555.10546875
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "release": "v0.1.2",
-  "package_version": "0.1.2",
+  "release": "v0.1.3",
+  "package_version": "0.1.3",
   "default_weight_kind": "ema",
   "parameters": {
     "decoder": 3851053,
@@ -33,18 +33,19 @@
     }
   },
   "inference_defaults": {
-    "attack_soften_db": 0.0,
-    "dynamic_soften_db": 1.0,
     "phase_lock_frames": 97,
-    "presence_max_gain_db": 2.5,
     "presence_restore": true,
-    "softening_match_level": true,
+    "presence_max_gain_db": 2.5,
+    "dynamic_soften_db": 0.0,
+    "upper_soften_db": 1.5,
+    "attack_soften_db": 0.0,
     "syllable_soften_db": 0.0,
-    "upper_soften_db": 1.5
+    "dynamics_smoothing": 0.0,
+    "softening_match_level": true
   },
   "model_license": "Apache-2.0",
   "perceptual_gain_established": false,
-  "historical_evaluation": "The 300-sentence v0 scores use raw continuation step 6500; not rerun for v0.1.2.",
+  "historical_evaluation": "The 300-sentence v0 quality scores use raw step 6500; not rerun for v0.1.3.",
   "exports": {
     "ema": {
       "checkpoint": {
@@ -420,40 +421,281 @@
     }
   },
   "release_assets": {
-    "release": "v0.1.2",
-    "package_version": "0.1.2",
+    "release": "v0.1.3",
+    "package_version": "0.1.3",
     "model_repository": "IvannP/Paradis-TTS",
-    "model_revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+    "model_revision": "3815937c283e9f63aa63791d3b5455b9270e426f",
     "default_weight_kind": "ema",
     "variants": {
       "fp32": {
-        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_fp32.zip",
-        "sha256": "24787e5775206b9f9d63da79eb3854ae5c525814eaa8bc74893903cb62dba88d",
-        "bytes": 30213321,
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/3815937c283e9f63aa63791d3b5455b9270e426f/paradis_tts_fp32.zip",
+        "sha256": "95d251d3ac5baf9f6d6aefa7b657973e6cd7c8a73e8afcd45f718c5f8d2997b7",
+        "bytes": 30214783,
         "onnx_bytes": 32819396
       },
       "int8": {
-        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_int8.zip",
-        "sha256": "4723a95ebb49aae9ef23611cee78aac41c6383ccade84b5c7fb9dfcdb473d156",
-        "bytes": 8213554,
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/3815937c283e9f63aa63791d3b5455b9270e426f/paradis_tts_int8.zip",
+        "sha256": "94cd8bed0761d09d40339b4ba6d6488015049c8961033086902399df91dd9fee",
+        "bytes": 8214915,
         "onnx_bytes": 9186652
       }
     },
     "alternative_weights": {
       "raw": {
         "fp32": {
-          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_fp32.zip",
-          "sha256": "9235652f27b0cfea5e342e5d5e0aaec6747e89f69f42b9c3c5f7c1169c9c5298",
-          "bytes": 30213174,
+          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/3815937c283e9f63aa63791d3b5455b9270e426f/paradis_tts_raw_fp32.zip",
+          "sha256": "aceab20a98281ba1e1844b25d19df1f2db2e3100d6b6c300eae98da283dce331",
+          "bytes": 30214371,
           "onnx_bytes": 32819396
         },
         "int8": {
-          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_int8.zip",
-          "sha256": "3c4c6eb54a556daabc65eb5f7fb2789abdfa40deb0dac1fe971d4672f46fce87",
-          "bytes": 8213858,
+          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/3815937c283e9f63aa63791d3b5455b9270e426f/paradis_tts_raw_int8.zip",
+          "sha256": "c0fa3feb21dfc43545a164ed315b64ebd3e9bf7e54735a48f184143744437f06",
+          "bytes": 8215150,
           "onnx_bytes": 9186652
         }
       }
     }
+  },
+  "derived_from": "v0.1.2; all neural graph and checkpoint hashes unchanged",
+  "runtime_changes": [
+    "Optimized NumPy filters",
+    "Dynamic softening disabled by default"
+  ],
+  "speed_evaluation": "evaluation/speed_20261016/report.json",
+  "offline_validation": {
+    "status": "FOUR_BUNDLES_PASS",
+    "no_network": true,
+    "no_torch_loaded": true,
+    "checks": [
+      {
+        "kind": "ema",
+        "variant": "fp32",
+        "status": "PASS",
+        "samples": [
+          {
+            "text": "Bonjour, voici la voix française de Paradis.",
+            "seed": 1729,
+            "seconds": 3.175,
+            "elapsed_seconds": 0.2510240999981761,
+            "rtf": 0.07906270866084288,
+            "peak": 0.6160742044448853,
+            "rms": 0.0746403694686982,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Sophie sèche ses chaussettes sur sa chaise.",
+            "seed": 1730,
+            "seconds": 2.675,
+            "elapsed_seconds": 0.2010124996304512,
+            "rtf": 0.07514485967493503,
+            "peak": 0.42525041103363037,
+            "rms": 0.06898909980174596,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+            "seed": 1731,
+            "seconds": 5.7,
+            "elapsed_seconds": 0.4390938999131322,
+            "rtf": 0.07703401752861969,
+            "peak": 0.5893058180809021,
+            "rms": 0.07127009404326864,
+            "clipped_fraction": 0.0
+          }
+        ],
+        "deterministic_seed": true,
+        "speed_control": true,
+        "long_text_chunks": 2,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 0.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "neural_file_hashes": {
+          "decoder.onnx": "cf2c0ef8fe8e7ef26b6930c326bdb17bf8e8a3741e949033f326b79c0786f95a",
+          "prosody.onnx": "d76cc58a1df1a98f4bf67eabbe5df41761f3c6c1b1d22a82e2a215a257408274",
+          "text.onnx": "aa93a503dfabe8f3d476740329481bb13724118b36c9c1780df8676a4258794a",
+          "vocab.json": "02762226a6edbbfb28295d0617b333484bf821a3785a59f3cc4b8d1f32a6f2cf"
+        }
+      },
+      {
+        "kind": "ema",
+        "variant": "int8",
+        "status": "PASS",
+        "samples": [
+          {
+            "text": "Bonjour, voici la voix française de Paradis.",
+            "seed": 1729,
+            "seconds": 3.175,
+            "elapsed_seconds": 0.2231115996837616,
+            "rtf": 0.07027136997913752,
+            "peak": 0.6272944211959839,
+            "rms": 0.07406429844834687,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Sophie sèche ses chaussettes sur sa chaise.",
+            "seed": 1730,
+            "seconds": 2.675,
+            "elapsed_seconds": 0.18049420043826103,
+            "rtf": 0.06747446745355554,
+            "peak": 0.41465139389038086,
+            "rms": 0.06832051826131692,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+            "seed": 1731,
+            "seconds": 5.675,
+            "elapsed_seconds": 0.39074999932199717,
+            "rtf": 0.06885462543118893,
+            "peak": 0.5817117691040039,
+            "rms": 0.07070998258180439,
+            "clipped_fraction": 0.0
+          }
+        ],
+        "deterministic_seed": true,
+        "speed_control": true,
+        "long_text_chunks": 2,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 0.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "neural_file_hashes": {
+          "decoder.onnx": "047cd14e5b38c90be23c2c7d68b213b085bf8fb10cfe9b2808f75c10cf110c20",
+          "prosody.onnx": "ac8d84cf9813dc105d3fd6080802c65a92bc1cdb680f341b13df4283cae82460",
+          "text.onnx": "1e063f73d4ae771eaae37972169a389eb0e4db5497d428086df50044c0d83bd2",
+          "vocab.json": "02762226a6edbbfb28295d0617b333484bf821a3785a59f3cc4b8d1f32a6f2cf"
+        }
+      },
+      {
+        "kind": "raw",
+        "variant": "fp32",
+        "status": "PASS",
+        "samples": [
+          {
+            "text": "Bonjour, voici la voix française de Paradis.",
+            "seed": 1729,
+            "seconds": 3.175,
+            "elapsed_seconds": 0.22527700010687113,
+            "rtf": 0.07095338586043186,
+            "peak": 0.6231405735015869,
+            "rms": 0.07526868851579864,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Sophie sèche ses chaussettes sur sa chaise.",
+            "seed": 1730,
+            "seconds": 2.675,
+            "elapsed_seconds": 0.18473329953849316,
+            "rtf": 0.06905917739756753,
+            "peak": 0.42551061511039734,
+            "rms": 0.06941511552013564,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+            "seed": 1731,
+            "seconds": 5.7,
+            "elapsed_seconds": 0.3975323000922799,
+            "rtf": 0.06974250878811929,
+            "peak": 0.6011703014373779,
+            "rms": 0.07191660610670365,
+            "clipped_fraction": 0.0
+          }
+        ],
+        "deterministic_seed": true,
+        "speed_control": true,
+        "long_text_chunks": 2,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 0.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "neural_file_hashes": {
+          "decoder.onnx": "6f2a5aa5f7dd616a1c77c2597cadee1aad3adb82437f3e498d57272f1b783d7c",
+          "prosody.onnx": "d76cc58a1df1a98f4bf67eabbe5df41761f3c6c1b1d22a82e2a215a257408274",
+          "text.onnx": "aa93a503dfabe8f3d476740329481bb13724118b36c9c1780df8676a4258794a",
+          "vocab.json": "02762226a6edbbfb28295d0617b333484bf821a3785a59f3cc4b8d1f32a6f2cf"
+        }
+      },
+      {
+        "kind": "raw",
+        "variant": "int8",
+        "status": "PASS",
+        "samples": [
+          {
+            "text": "Bonjour, voici la voix française de Paradis.",
+            "seed": 1729,
+            "seconds": 3.175,
+            "elapsed_seconds": 0.21606780029833317,
+            "rtf": 0.06805285048766399,
+            "peak": 0.6294447779655457,
+            "rms": 0.07492364447748445,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Sophie sèche ses chaussettes sur sa chaise.",
+            "seed": 1730,
+            "seconds": 2.675,
+            "elapsed_seconds": 0.1777013000100851,
+            "rtf": 0.06643039252713462,
+            "peak": 0.4174092710018158,
+            "rms": 0.06889307180634527,
+            "clipped_fraction": 0.0
+          },
+          {
+            "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+            "seed": 1731,
+            "seconds": 5.675,
+            "elapsed_seconds": 0.4086148999631405,
+            "rtf": 0.07200262554416573,
+            "peak": 0.5890954732894897,
+            "rms": 0.07155166526023406,
+            "clipped_fraction": 0.0
+          }
+        ],
+        "deterministic_seed": true,
+        "speed_control": true,
+        "long_text_chunks": 2,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 0.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        },
+        "neural_file_hashes": {
+          "decoder.onnx": "e705632e8c4cfcff91eaeea6ca4d2478b3de1c80da09e5a953f50a083ee10d35",
+          "prosody.onnx": "ac8d84cf9813dc105d3fd6080802c65a92bc1cdb680f341b13df4283cae82460",
+          "text.onnx": "1e063f73d4ae771eaae37972169a389eb0e4db5497d428086df50044c0d83bd2",
+          "vocab.json": "02762226a6edbbfb28295d0617b333484bf821a3785a59f3cc4b8d1f32a6f2cf"
+        }
+      }
+    ]
   }
 }

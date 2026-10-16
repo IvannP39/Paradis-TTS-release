@@ -1,0 +1,30 @@
+{
+  "normalized_text": "Sophie sèche ses chaussettes sur sa chaise.",
+  "seed": 1730,
+  "sample_rate": 24000,
+  "chunks": [
+    {
+      "text": "Sophie sèche ses chaussettes sur sa chaise.",
+      "phonemes": "sofˈi sˈɛʃ se ʃosˈɛt syʁ sa ʃˈɛz.",
+      "frames": 107,
+      "seed": 1730
+    }
+  ],
+  "postprocessing": {
+    "phase_lock_frames": 97,
+    "presence_restore": true,
+    "presence_max_gain_db": 2.5,
+    "dynamic_soften_db": 0.0,
+    "upper_soften_db": 1.5,
+    "attack_soften_db": 0.0,
+    "syllable_soften_db": 0.0,
+    "dynamics_smoothing": 0.0,
+    "softening_match_level": true
+  },
+  "seconds": 2.675,
+  "elapsed_seconds": 0.2010124996304512,
+  "rtf": 0.07514485967493503,
+  "peak": 0.42525041103363037,
+  "rms": 0.06898909980174596,
+  "clipped_fraction": 0.0
+}

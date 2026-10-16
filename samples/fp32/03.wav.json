@@ -1,0 +1,30 @@
+{
+  "normalized_text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+  "seed": 1731,
+  "sample_rate": 24000,
+  "chunks": [
+    {
+      "text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+      "phonemes": "lə tˈe ʒˈe vˈe pˈaʁ a dˈizyˈit ˈœʁ tʁˈɑ̃t e lə bijˈɛ kˈut dˈuz øʁˈoz e sɛ̃kˈɑ̃t sɑ̃tˈim.",
+      "frames": 228,
+      "seed": 1731
+    }
+  ],
+  "postprocessing": {
+    "phase_lock_frames": 97,
+    "presence_restore": true,
+    "presence_max_gain_db": 2.5,
+    "dynamic_soften_db": 0.0,
+    "upper_soften_db": 1.5,
+    "attack_soften_db": 0.0,
+    "syllable_soften_db": 0.0,
+    "dynamics_smoothing": 0.0,
+    "softening_match_level": true
+  },
+  "seconds": 5.7,
+  "elapsed_seconds": 0.4390938999131322,
+  "rtf": 0.07703401752861969,
+  "peak": 0.5893058180809021,
+  "rms": 0.07127009404326864,
+  "clipped_fraction": 0.0
+}

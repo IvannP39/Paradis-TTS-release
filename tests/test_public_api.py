@@ -5,14 +5,68 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch,Mock
 import zipfile
 
 from paradis_tts import ParadisTTS
 from paradis_tts.api import download_model
+from paradis_tts.audio import PostProcessing
+from paradis_tts.onnx_runtime import OnnxTTS
+from paradis_tts.normalization_v2 import VERSION
 
 
 class PublicAPI(unittest.TestCase):
+    def test_incomplete_direct_download_uses_verified_official_hf_fallback(self):
+        content=b'graph'
+        archive=io.BytesIO()
+        with zipfile.ZipFile(archive,'w') as stream:
+            stream.writestr('decoder.onnx',content)
+            stream.writestr('manifest.json',json.dumps({'files':{
+                'decoder.onnx':hashlib.sha256(content).hexdigest()}}))
+        blob=archive.getvalue()
+        registry={'release':'fallback-test','model_repository':'owner/model','model_revision':'pinned-commit',
+            'variants':{'fp32':{'url':'https://example.invalid/model.zip','bytes':len(blob),
+                               'sha256':hashlib.sha256(blob).hexdigest()}}}
+        original=Path.read_text
+        def read(path,*args,**kwargs):
+            return json.dumps(registry) if path.name=='release_assets.json' else original(path,*args,**kwargs)
+        with tempfile.TemporaryDirectory() as temporary:
+            source=Path(temporary)/'download.zip'
+            source.write_bytes(blob)
+            with patch.object(Path,'read_text',read), patch('urllib.request.urlopen',return_value=io.BytesIO(b'')), patch(
+                    'huggingface_hub.hf_hub_download',return_value=str(source)) as fallback:
+                directory=download_model(cache_dir=Path(temporary)/'cache')
+                self.assertEqual((directory/'decoder.onnx').read_bytes(),content)
+                self.assertEqual(fallback.call_args.kwargs['revision'],'pinned-commit')
+                self.assertFalse(fallback.call_args.kwargs['token'])
+            source.write_bytes(b'corrupt')
+            with patch.object(Path,'read_text',read), patch('urllib.request.urlopen',return_value=io.BytesIO(b'')), patch(
+                    'huggingface_hub.hf_hub_download',return_value=str(source)):
+                with self.assertRaisesRegex(ValueError,'checksum'):
+                    download_model(cache_dir=Path(temporary)/'different-cache')
+
+    def test_old_model_profiles_cannot_reenable_dynamic_softening_by_default(self):
+        previous=PostProcessing(dynamic_soften_db=1.)
+        for settings_file in (False,True):
+            with self.subTest(settings_file=settings_file), tempfile.TemporaryDirectory() as temporary:
+                folder=Path(temporary)
+                (folder/'manifest.json').write_text(json.dumps({'schema_version':1,
+                    'normalizer_version':VERSION,'sample_rate':24000,'files':{},
+                    'espeak_version':[1,2,3],'inference_defaults':previous.to_dict()}))
+                (folder/'vocab.json').write_text('{}')
+                if settings_file: previous.save(folder/'postprocessing.json')
+                frontend=Mock()
+                frontend.g2p.backend.version.return_value=[1,2,3]
+                with patch('onnxruntime.InferenceSession'), patch(
+                        'paradis_tts.onnx_runtime.InferenceFrontend',return_value=frontend):
+                    model=OnnxTTS(folder)
+                    self.assertEqual(model.postprocessing.dynamic_soften_db,0.)
+                    self.assertEqual(model.postprocessing.phase_lock_frames,97)
+                    self.assertTrue(model.postprocessing.presence_restore)
+                    self.assertEqual(model.postprocessing.upper_soften_db,1.5)
+                    explicit=OnnxTTS(folder,postprocessing=previous)
+                    self.assertEqual(explicit.postprocessing,previous)
+
     def test_ema_default_and_raw_alternative_have_separate_offline_caches(self):
         blobs = {}
         for kind in ('ema', 'raw'):

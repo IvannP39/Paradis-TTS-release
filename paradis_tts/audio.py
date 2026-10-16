@@ -1,5 +1,6 @@
 """Portable 24 kHz postprocessing and PCM WAV output. NumPy only; no Torch."""
 from dataclasses import dataclass,asdict
+from functools import lru_cache
 import math
 from pathlib import Path
 import json
@@ -7,6 +8,26 @@ import wave
 import numpy as np
 
 RATE=24000
+
+
+@lru_cache(maxsize=4)
+def _window(n):
+    window=(.5-.5*np.cos(2*np.pi*np.arange(n)/n)).astype(np.float32)
+    window.setflags(write=False)
+    return window
+
+
+@lru_cache(maxsize=4)
+def _reconstruction_weights(n,hop):
+    """One full overlap pattern and both boundaries, independent of clip length."""
+    count=n//hop
+    squared=_window(n).astype(np.float64)**2
+    norm=np.zeros((2*count-1)*hop,dtype=np.float64)
+    for index in range(count):
+        norm[index*hop:index*hop+n]+=squared
+    left=norm[:n-hop].copy();pattern=norm[n-hop:n].copy();right=norm[n:].copy()
+    for values in (left,pattern,right): values.setflags(write=False)
+    return left,pattern,right
 
 
 def mono(audio):
@@ -21,56 +42,114 @@ def stft(audio,n=1024,hop=256):
     if len(audio)<=n//2: raise ValueError('Audio too short for this STFT')
     padded=np.pad(audio,(n//2,n//2),mode='reflect')
     frames=np.lib.stride_tricks.sliding_window_view(padded,n)[::hop]
-    window=(.5-.5*np.cos(2*np.pi*np.arange(n)/n)).astype(np.float32)
+    window=_window(n)
     return np.fft.rfft(frames*window,axis=-1).T.astype(np.complex64)
 
 
 def istft(spectrum,length,n=1024,hop=256):
-    window=(.5-.5*np.cos(2*np.pi*np.arange(n)/n)).astype(np.float32)
+    window=_window(n)
     frames=np.fft.irfft(spectrum.T,n=n,axis=-1)*window
     size=(frames.shape[0]-1)*hop+n
-    output=np.zeros(size,dtype=np.float64);norm=np.zeros(size,dtype=np.float64)
-    for index,frame in enumerate(frames):
-        start=index*hop
-        output[start:start+n]+=frame
-        norm[start:start+n]+=window.astype(np.float64)**2
+    output=np.zeros(size,dtype=np.float64)
+    squared=window.astype(np.float64)**2
+    if n%hop==0:
+        # Each slice places one hop-sized section of every frame at once.
+        # Descending window offsets retain the original per-sample addition order.
+        width=frames.shape[0]*hop
+        for offset in range(n-hop,-1,-hop):
+            output[offset:offset+width]+=frames[:,offset:offset+hop].reshape(-1)
+        if frames.shape[0]>=n//hop:
+            left,pattern,right=_reconstruction_weights(n,hop)
+            norm=np.tile(pattern,frames.shape[0]+n//hop-1)
+            norm[:len(left)]=left
+            norm[width:]=right
+        else:
+            norm=np.zeros(size,dtype=np.float64)
+            for index in range(frames.shape[0]): norm[index*hop:index*hop+n]+=squared
+    else:
+        norm=np.zeros(size,dtype=np.float64)
+        for index,frame in enumerate(frames):
+            start=index*hop
+            output[start:start+n]+=frame
+            norm[start:start+n]+=squared
     return (output[n//2:n//2+length]/np.maximum(norm[n//2:n//2+length],1e-12)).astype(np.float32)
 
 
 def phase_lock(audio,source,f0,length=97):
+    return _phase_lock(audio,source,f0,length)[0]
+
+
+def _phase_lock(audio,source,f0,length):
+    """Also return the unchanged raw spectrum for presence restoration."""
     if length not in (9,17,33,49,65,97): raise ValueError('Unsupported phase filter length')
     audio=mono(audio);source=mono(source);f0=mono(f0)
     if source.shape!=audio.shape: raise ValueError('Excitation/audio lengths differ')
     spectrum=stft(audio);excitation=stft(source)
     frequencies=np.arange(513)*RATE/1024
-    band=((frequencies>=2000)&(frequencies<8000))[:,None]
+    band=(frequencies>=2000)&(frequencies<8000)
     voiced=(f0[np.minimum(np.arange(spectrum.shape[1])*256//300,len(f0)-1)]>60)[None]
-    relative=spectrum*excitation.conj()/np.maximum(np.abs(excitation),1e-6)
+    # Only these frequency bins can be replaced; retain all time frames in the
+    # convolution because unvoiced neighbours still affect smoothing.
+    selected=excitation[band]
+    relative=spectrum[band]*selected.conj()/np.maximum(np.abs(selected),1e-6)
     kernel=(.5-.5*np.cos(2*np.pi*np.arange(length+2)/(length+2)))[1:-1].astype(np.float32)
     kernel/=kernel.sum()
     padded=np.pad(relative,((0,0),(length//2,length//2)))
     smoothed=np.stack([np.convolve(row,kernel[::-1],mode='valid') for row in padded])
-    angles=np.where(band&voiced,np.angle(excitation)+np.angle(smoothed),np.angle(spectrum))
-    return istft(np.abs(spectrum)*np.exp(1j*angles),len(audio))
+    # Outside the correction mask the complex spectrum is unchanged. Keeping
+    # its Cartesian values avoids an unnecessary angle/exp round trip there.
+    active=np.ix_(np.flatnonzero(band),np.flatnonzero(voiced[0]))
+    corrected=spectrum.copy()
+    angles=np.angle(excitation[active])+np.angle(smoothed[:,voiced[0]])
+    corrected[active]=np.abs(spectrum[active])*np.exp(1j*angles)
+    return istft(corrected,len(audio)),spectrum
 
 
 def rise(frequencies,lo,hi):
     return .5-.5*np.cos(np.pi*np.clip((frequencies-lo)/(hi-lo),0,1))
 
 
+def _presence_bands(n):
+    f=np.fft.rfftfreq(n,1/RATE)
+    middle=rise(f,3500,4500)
+    low=rise(f,1500,2000)*(1-middle)
+    high=middle*(1-rise(f,7500,8500))
+    low.setflags(write=False);high.setflags(write=False)
+    return low,high
+
+
+def _upper_gain(n,db):
+    f=np.fft.rfftfreq(n,1/RATE)
+    gain=10**(-rise(f,8000,10000)*db/20)
+    gain.setflags(write=False)
+    return gain
+
+
+# Only cache the common FFT sizes. Larger, exceptional clips must not leave
+# large retained arrays behind; each cache has at most four entries.
+_cached_presence_bands=lru_cache(maxsize=4)(_presence_bands)
+_cached_upper_gain=lru_cache(maxsize=4)(_upper_gain)
+_MAX_CACHED_FFT=1<<20
+
+
 def restore_presence(raw,filtered,max_gain_db=2.5):
+    return _restore_presence(raw,filtered,max_gain_db)
+
+
+def _restore_presence(raw,filtered,max_gain_db,raw_spectrum=None):
     raw=mono(raw);filtered=mono(filtered)
     frequencies=np.arange(513)*RATE/1024
-    before=np.mean(np.abs(stft(raw))**2,axis=-1)
+    before=np.mean(np.abs(stft(raw) if raw_spectrum is None else raw_spectrum)**2,axis=-1)
     after=np.mean(np.abs(stft(filtered))**2,axis=-1)
     gains=[]
     for lo,hi in ((2000,4000),(4000,8000)):
         band=(frequencies>=lo)&(frequencies<hi)
         gain=10*np.log10(max(float(before[band].sum()),1e-12)/max(float(after[band].sum()),1e-12))
         gains.append(np.clip(gain,0,max_gain_db))
-    n=1<<(2*len(raw)-1).bit_length();f=np.fft.rfftfreq(n,1/RATE)
-    weight=rise(f,1500,2000)*(1-rise(f,3500,4500))*gains[0]
-    weight+=rise(f,3500,4500)*(1-rise(f,7500,8500))*gains[1]
+    n=1<<(2*len(raw)-1).bit_length()
+    low,high=(_cached_presence_bands(n) if n<=_MAX_CACHED_FFT else _presence_bands(n))
+    weight=low*gains[0]
+    weight+=high*gains[1]
     return np.fft.irfft(np.fft.rfft(filtered,n)*10**(weight/20),n)[:len(raw)].astype(np.float32)
 
 
@@ -112,7 +191,7 @@ class PostProcessing:
     phase_lock_frames:int=97
     presence_restore:bool=True
     presence_max_gain_db:float=2.5
-    dynamic_soften_db:float=1.
+    dynamic_soften_db:float=0.
     upper_soften_db:float=1.5
     attack_soften_db:float=0.
     syllable_soften_db:float=0.
@@ -159,7 +238,7 @@ def read_wav(path):
         return np.frombuffer(reader.readframes(reader.getnframes()),dtype='<i2').astype(np.float32)/32768
 
 
-def soften_audio(audio,*,dynamic_db=1.,upper_db=1.5,attack_db=0.,syllable_db=0.,smoothing=0.,match_level=True):
+def soften_audio(audio,*,dynamic_db=0.,upper_db=1.5,attack_db=0.,syllable_db=0.,smoothing=0.,match_level=True):
     """Apply the user-selected softening to an existing mono 24 kHz waveform."""
     PostProcessing(dynamic_soften_db=dynamic_db,upper_soften_db=upper_db,
         attack_soften_db=attack_db,syllable_soften_db=syllable_db,dynamics_smoothing=smoothing,
@@ -175,13 +254,19 @@ def soften_audio(audio,*,dynamic_db=1.,upper_db=1.5,attack_db=0.,syllable_db=0.,
         desired=np.clip(((power*band[:,None]).sum(0)/total-.25)/.35,0,1)*dynamic_db
         desired*=total>=total.max()*1e-4
         previous=0.;envelope=[]
+        attack=math.exp(-(128/RATE)/.005);release=math.exp(-(128/RATE)/.04)
         for value in desired:
-            alpha=math.exp(-(128/RATE)/(.005 if value>previous else .04))
+            alpha=attack if value>previous else release
             previous=alpha*previous+(1-alpha)*value;envelope.append(previous)
-        output=istft(spectrum*10**(-band[:,None]*np.array(envelope)[None]/20),len(output),hop=128)
+        # Zero-band bins have gain exactly one. Promote them unchanged rather
+        # than evaluating a large matrix of unnecessary powers and products.
+        active=band!=0
+        softened=spectrum.astype(np.complex128)
+        softened[active]=spectrum[active]*10**(-band[active,None]*np.array(envelope)[None]/20)
+        output=istft(softened,len(output),hop=128)
     if upper_db:
-        n=1<<(2*len(output)-1).bit_length();f=np.fft.rfftfreq(n,1/RATE)
-        gain=10**(-rise(f,8000,10000)*upper_db/20)
+        n=1<<(2*len(output)-1).bit_length()
+        gain=(_cached_upper_gain(n,upper_db) if n<=_MAX_CACHED_FFT else _upper_gain(n,upper_db))
         output=np.fft.irfft(np.fft.rfft(output,n)*gain,n)[:len(output)].astype(np.float32)
     output=dynamics(output,attack_db,syllable_db,smoothing)
     before=np.sqrt(np.mean(reference.astype(np.float64)**2));after=np.sqrt(np.mean(output.astype(np.float64)**2))
@@ -199,8 +284,9 @@ def process_audio(audio,*,source=None,f0=None,settings=None):
     raw=mono(audio);output=raw
     if settings.phase_lock_frames:
         if source is None or f0 is None: raise ValueError('Matching source and F0 are required for phase correction')
-        output=phase_lock(raw,source,f0,settings.phase_lock_frames)
-        if settings.presence_restore: output=restore_presence(raw,output,settings.presence_max_gain_db)
+        output,spectrum=_phase_lock(raw,source,f0,settings.phase_lock_frames)
+        if settings.presence_restore:
+            output=_restore_presence(raw,output,settings.presence_max_gain_db,spectrum)
     return soften_audio(output,dynamic_db=settings.dynamic_soften_db,upper_db=settings.upper_soften_db,
         attack_db=settings.attack_soften_db,syllable_db=settings.syllable_soften_db,
         smoothing=settings.dynamics_smoothing,match_level=settings.softening_match_level)

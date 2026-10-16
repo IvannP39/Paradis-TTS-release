@@ -1,0 +1,30 @@
+{
+  "normalized_text": "Bonjour, voici la voix française de Paradis.",
+  "seed": 1729,
+  "sample_rate": 24000,
+  "chunks": [
+    {
+      "text": "Bonjour, voici la voix française de Paradis.",
+      "phonemes": "bɔ̃ʒˈuʁ, vwasˌi la vwˈa fʁɑ̃sˈɛz də paʁadˈi.",
+      "frames": 127,
+      "seed": 1729
+    }
+  ],
+  "postprocessing": {
+    "phase_lock_frames": 97,
+    "presence_restore": true,
+    "presence_max_gain_db": 2.5,
+    "dynamic_soften_db": 0.0,
+    "upper_soften_db": 1.5,
+    "attack_soften_db": 0.0,
+    "syllable_soften_db": 0.0,
+    "dynamics_smoothing": 0.0,
+    "softening_match_level": true
+  },
+  "seconds": 3.175,
+  "elapsed_seconds": 0.2510240999981761,
+  "rtf": 0.07906270866084288,
+  "peak": 0.6160742044448853,
+  "rms": 0.0746403694686982,
+  "clipped_fraction": 0.0
+}
