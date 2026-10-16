@@ -285,5 +285,26 @@
         "dynamic_soften_db": 0.0
       }
     ]
+  },
+  "publication": {
+    "version": "0.1.3",
+    "pypi": "https://pypi.org/project/paradis-tts/0.1.3/",
+    "github_release": "https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.3",
+    "workflow_run": "https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38877259320",
+    "workflow_status": "success",
+    "artifacts": [
+      {
+        "filename": "paradis_tts-0.1.3-py3-none-any.whl",
+        "sha256": "7978f302ce70addf9aefba190c70a4c636e19fd559254fb5512834209c8d4f0e",
+        "bytes": 30837
+      },
+      {
+        "filename": "paradis_tts-0.1.3.tar.gz",
+        "sha256": "93eaef8ed8ef10405586950f4b8882fdc05cbb1474417e6a8f681d4bcfe79d2b",
+        "bytes": 33502
+      }
+    ],
+    "hf_model_revision": "3815937c283e9f63aa63791d3b5455b9270e426f",
+    "hf_main_revision": "df0c94fa957c53067760ee95d7898f963b2de228"
   }
 }

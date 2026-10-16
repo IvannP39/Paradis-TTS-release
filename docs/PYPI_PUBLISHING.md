@@ -8,6 +8,13 @@ Première publication réussie : **0.1.1**, disponible sur
 [workflow GitHub](https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38862835808).
 La configuration ci-dessous sert de référence pour maintenir cette liaison.
 
+
+Dernière publication vérifiée : **0.1.3**, via
+[Trusted Publishing](https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38877259320).
+Le wheel et les sources téléchargés depuis PyPI ont été vérifiés par SHA256
+et joints à la release GitHub et au dépôt Hugging Face. Le workflow teste aussi
+un vrai téléchargement des poids et une synthèse CPU avant l'envoi.
+
 ## Première publication : configuration du compte
 
 Connecté à ton compte PyPI, ouvrir
