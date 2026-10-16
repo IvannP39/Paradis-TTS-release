@@ -1,0 +1,180 @@
+{
+  "status": "PUBLISHED_AND_INSTALLED",
+  "package_version": "0.1.2",
+  "default_weight_kind": "ema",
+  "model_release": "v0.1.2",
+  "decoder_step": 10000,
+  "huggingface": {
+    "repository": "IvannP/Paradis-TTS",
+    "revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+    "tag": "v0.1.2"
+  },
+  "github": {
+    "id": 414642386,
+    "draft": false,
+    "tag": "v0.1.2",
+    "source_commit": "942a193cd6e4441efc37dd1a2b4a3c8c4a5060ef",
+    "asset_count": 10,
+    "url": "https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.2"
+  },
+  "pypi": {
+    "url": "https://pypi.org/project/paradis-tts/0.1.2/",
+    "workflow": "https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38864193558",
+    "workflow_status": "success",
+    "files": [
+      {
+        "filename": "paradis_tts-0.1.2-py3-none-any.whl",
+        "sha256": "6646319b00f2d0d530d50713ac43e9010dc5941b986fa7ad09b250e7dc190dfb",
+        "upload_time": "2026-10-16T06:58:23.333231Z"
+      },
+      {
+        "filename": "paradis_tts-0.1.2.tar.gz",
+        "sha256": "2e879a89e30524ba04eeff64c5ebbd3c15d6a303920070069c15dd54967fd6a9",
+        "upload_time": "2026-10-16T06:58:24.604318Z"
+      }
+    ]
+  },
+  "pypi_installed_wheel": {
+    "status": "INSTALLED_WHEEL_PASS",
+    "variant": "fp32",
+    "version": "0.1.2",
+    "weight_kind": "ema",
+    "model_release": "v0.1.2",
+    "decoder_step": 10000,
+    "torch_installed": false,
+    "kokoro_installed": false,
+    "default_equals_explicit_postprocessing": true,
+    "disable_processing_changes_waveform": true,
+    "offline_synthesis": true,
+    "download_and_offline_cache_verified": true,
+    "postprocessing": {
+      "phase_lock_frames": 97,
+      "presence_restore": true,
+      "presence_max_gain_db": 2.5,
+      "dynamic_soften_db": 1.0,
+      "upper_soften_db": 1.5,
+      "attack_soften_db": 0.0,
+      "syllable_soften_db": 0.0,
+      "dynamics_smoothing": 0.0,
+      "softening_match_level": true
+    }
+  },
+  "validation": {
+    "status": "PREPUBLICATION_PASS",
+    "version": "0.1.2",
+    "unit_tests": 5,
+    "twine_check": "PASS",
+    "huggingface": {
+      "repository": "IvannP/Paradis-TTS",
+      "revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+      "tag": "v0.1.2"
+    },
+    "installed_wheel": {
+      "ema": {
+        "fp32": {
+          "status": "INSTALLED_WHEEL_PASS",
+          "variant": "fp32",
+          "version": "0.1.2",
+          "weight_kind": "ema",
+          "model_release": "v0.1.2",
+          "decoder_step": 10000,
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "default_equals_explicit_postprocessing": true,
+          "disable_processing_changes_waveform": true,
+          "offline_synthesis": true,
+          "download_and_offline_cache_verified": true,
+          "postprocessing": {
+            "phase_lock_frames": 97,
+            "presence_restore": true,
+            "presence_max_gain_db": 2.5,
+            "dynamic_soften_db": 1.0,
+            "upper_soften_db": 1.5,
+            "attack_soften_db": 0.0,
+            "syllable_soften_db": 0.0,
+            "dynamics_smoothing": 0.0,
+            "softening_match_level": true
+          }
+        },
+        "int8": {
+          "status": "INSTALLED_WHEEL_PASS",
+          "variant": "int8",
+          "version": "0.1.2",
+          "weight_kind": "ema",
+          "model_release": "v0.1.2",
+          "decoder_step": 10000,
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "default_equals_explicit_postprocessing": true,
+          "disable_processing_changes_waveform": true,
+          "offline_synthesis": true,
+          "download_and_offline_cache_verified": true,
+          "postprocessing": {
+            "phase_lock_frames": 97,
+            "presence_restore": true,
+            "presence_max_gain_db": 2.5,
+            "dynamic_soften_db": 1.0,
+            "upper_soften_db": 1.5,
+            "attack_soften_db": 0.0,
+            "syllable_soften_db": 0.0,
+            "dynamics_smoothing": 0.0,
+            "softening_match_level": true
+          }
+        }
+      },
+      "raw": {
+        "fp32": {
+          "status": "INSTALLED_WHEEL_PASS",
+          "variant": "fp32",
+          "version": "0.1.2",
+          "weight_kind": "raw",
+          "model_release": "v0.1.2",
+          "decoder_step": 10000,
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "default_equals_explicit_postprocessing": true,
+          "disable_processing_changes_waveform": true,
+          "offline_synthesis": true,
+          "download_and_offline_cache_verified": true,
+          "postprocessing": {
+            "phase_lock_frames": 97,
+            "presence_restore": true,
+            "presence_max_gain_db": 2.5,
+            "dynamic_soften_db": 1.0,
+            "upper_soften_db": 1.5,
+            "attack_soften_db": 0.0,
+            "syllable_soften_db": 0.0,
+            "dynamics_smoothing": 0.0,
+            "softening_match_level": true
+          }
+        },
+        "int8": {
+          "status": "INSTALLED_WHEEL_PASS",
+          "variant": "int8",
+          "version": "0.1.2",
+          "weight_kind": "raw",
+          "model_release": "v0.1.2",
+          "decoder_step": 10000,
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "default_equals_explicit_postprocessing": true,
+          "disable_processing_changes_waveform": true,
+          "offline_synthesis": true,
+          "download_and_offline_cache_verified": true,
+          "postprocessing": {
+            "phase_lock_frames": 97,
+            "presence_restore": true,
+            "presence_max_gain_db": 2.5,
+            "dynamic_soften_db": 1.0,
+            "upper_soften_db": 1.5,
+            "attack_soften_db": 0.0,
+            "syllable_soften_db": 0.0,
+            "dynamics_smoothing": 0.0,
+            "softening_match_level": true
+          }
+        }
+      }
+    },
+    "full_300_sentence_evaluation_rerun": false
+  }
+}
