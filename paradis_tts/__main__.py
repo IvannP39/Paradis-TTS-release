@@ -12,6 +12,7 @@ def main():
     synth=commands.add_parser('synthesize',help='Generate an actual 24 kHz WAV using an ONNX bundle')
     synth.add_argument('--model-folder','--bundle',dest='model_folder',type=Path)
     synth.add_argument('--variant',choices=('fp32','int8'),default='fp32')
+    synth.add_argument('--weight-kind',choices=('ema','raw'),help='Default: the release-selected weights (EMA in 0.1.2)')
     synth.add_argument('--no-post-traitement',action='store_true')
     text=synth.add_mutually_exclusive_group(required=True)
     text.add_argument('--text');text.add_argument('--text-file',type=Path)
@@ -36,7 +37,7 @@ def main():
     if args.command=='synthesize':
         from paradis_tts.api import ParadisTTS
         model=ParadisTTS(model_folder=args.model_folder,threads=args.threads,postprocessing=settings,
-                         variant=args.variant,post_traitement=not args.no_post_traitement)
+                         variant=args.variant,weight_kind=args.weight_kind,post_traitement=not args.no_post_traitement)
         model.postprocessing=replace(model.postprocessing,**overrides)
         text=args.text if args.text is not None else args.text_file.read_text(encoding='utf-8-sig')
         result=model.to_file(text,args.output,seed=args.seed,speed=args.speed,overwrite=args.overwrite)

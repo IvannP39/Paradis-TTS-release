@@ -13,6 +13,39 @@ from paradis_tts.api import download_model
 
 
 class PublicAPI(unittest.TestCase):
+    def test_ema_default_and_raw_alternative_have_separate_offline_caches(self):
+        blobs = {}
+        for kind in ('ema', 'raw'):
+            content = kind.encode()
+            archive = io.BytesIO()
+            with zipfile.ZipFile(archive, 'w') as stream:
+                stream.writestr('decoder.onnx', content)
+                stream.writestr('manifest.json', json.dumps({'files':{
+                    'decoder.onnx':hashlib.sha256(content).hexdigest()}}))
+            blobs[kind] = archive.getvalue()
+        assets = {kind:{'fp32':{'url':'https://example.invalid/'+kind,
+            'sha256':hashlib.sha256(blob).hexdigest()}} for kind,blob in blobs.items()}
+        registry = {'release':'test-new-model', 'default_weight_kind':'ema',
+                    'variants':assets['ema'], 'alternative_weights':{'raw':assets['raw']}}
+        original = Path.read_text
+        def read(path, *args, **kwargs):
+            return json.dumps(registry) if path.name=='release_assets.json' else original(path,*args,**kwargs)
+        def respond(request, **kwargs):
+            return io.BytesIO(blobs[request.full_url.rsplit('/',1)[1]])
+        with tempfile.TemporaryDirectory() as temporary, patch.object(Path,'read_text',read):
+            with patch('urllib.request.urlopen',side_effect=respond) as network:
+                ema = download_model(cache_dir=temporary)
+                raw = download_model(weight_kind='raw',cache_dir=temporary)
+                self.assertEqual(network.call_count,2)
+            self.assertNotEqual(ema,raw)
+            self.assertEqual((ema/'decoder.onnx').read_bytes(),b'ema')
+            self.assertEqual((raw/'decoder.onnx').read_bytes(),b'raw')
+            with patch('urllib.request.urlopen',side_effect=AssertionError('Unexpected network')):
+                self.assertEqual(download_model(weight_kind='ema',cache_dir=temporary,local_files_only=True),ema)
+                self.assertEqual(download_model(weight_kind='raw',cache_dir=temporary,local_files_only=True),raw)
+            with self.assertRaises(ValueError):
+                download_model(weight_kind='other',cache_dir=temporary)
+
     def test_explicit_local_folder_never_downloads_and_legacy_alias_works(self):
         with tempfile.TemporaryDirectory() as temporary:
             folder = Path(temporary)

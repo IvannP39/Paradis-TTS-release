@@ -1,10 +1,12 @@
-# Modèle v0 et exports
+# Modèle v0.1.2 et exports
 
 Paradis-TTS est une synthèse française mono-voix distillée depuis Kokoro `ff_siwis`,
-selon l'approche de Paradee. La v0 assemble les poids texte `s+mlp` à 8 000 étapes
-et le décodeur `A_full_phase` brut du checkpoint sauvegardé à 6 500 étapes de
-sa continuation GAN. C'est un snapshot figé au début de la préparation de release,
-pas un fichier `last.pt` qui change pendant le téléchargement.
+selon l'approche de Paradee. La v0.1.2 assemble les poids texte `s+mlp` à 8 000 étapes
+et la moyenne EMA finale du décodeur `A_full_phase` à 10 000 étapes de continuation
+GAN, avec une décroissance de 0,999. Les poids bruts de cette même étape sont
+disponibles avec `weight_kind="raw"`. Les quatre archives (EMA/brut × FP32/INT8)
+sont figées et vérifiées par SHA256. La v0 historique reste accessible et utilise
+le décodeur brut à 6 500 étapes.
 
 | Composant | Paramètres |
 |---|---:|

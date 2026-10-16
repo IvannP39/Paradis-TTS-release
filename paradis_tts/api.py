@@ -11,7 +11,7 @@ import zipfile
 from .audio import PostProcessing
 from .onnx_runtime import OnnxTTS
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def _verify(directory):
@@ -24,15 +24,28 @@ def _verify(directory):
     return root
 
 
-def download_model(variant='fp32', *, cache_dir=None, local_files_only=False):
+def download_model(variant='fp32', *, weight_kind=None, cache_dir=None, local_files_only=False):
     """Download pinned Hugging Face weights once; reuse the verified local cache."""
     if variant not in ('fp32', 'int8'):
         raise ValueError('variant must be fp32 or int8')
     registry = json.loads(Path(__file__).with_name('release_assets.json').read_text(encoding='utf-8'))
-    asset = registry['variants'][variant]
+    default_kind = registry.get('default_weight_kind')
+    if weight_kind is not None and weight_kind not in ('ema', 'raw'):
+        raise ValueError('weight_kind must be ema or raw')
+    selected_kind = weight_kind or default_kind
+    variants = registry['variants']
+    if selected_kind != default_kind:
+        alternatives = registry.get('alternative_weights', {})
+        if selected_kind not in alternatives:
+            raise ValueError(f'Weights unavailable in this release: {selected_kind}')
+        variants = alternatives[selected_kind]
+    asset = variants[variant]
     base = Path(cache_dir) if cache_dir else Path(os.environ.get('PARADIS_TTS_CACHE',
         str(Path(os.environ.get('LOCALAPPDATA', Path.home() / '.cache')) / 'paradis-tts')))
-    destination = base / registry['release'] / variant
+    destination = base / registry['release']
+    if selected_kind is not None:
+        destination = destination / selected_kind
+    destination = destination / variant
     if destination.is_dir():
         return _verify(destination)
     if local_files_only:
@@ -90,7 +103,7 @@ class ParadisTTS(OnnxTTS):
                 return ResearchTTS(bundle, *args, **kwargs)
         return super().__new__(cls)
 
-    def __init__(self, bundle=None, *, model_folder=None, post_traitement=True, variant='fp32', threads=2,
+    def __init__(self, bundle=None, *, model_folder=None, post_traitement=True, variant='fp32', weight_kind=None, threads=2,
                  cache_dir=None, local_files_only=False, postprocessing=None):
         """Load model_folder directly, or download variant from Hugging Face.
 
@@ -107,7 +120,7 @@ class ParadisTTS(OnnxTTS):
         if bundle is None:
             adjacent = Path(__file__).resolve().parent.parent
             bundle = adjacent if (adjacent / 'manifest.json').is_file() else download_model(
-                variant, cache_dir=cache_dir, local_files_only=local_files_only)
+                variant, weight_kind=weight_kind, cache_dir=cache_dir, local_files_only=local_files_only)
         else:
             bundle = Path(bundle).expanduser().resolve()
             if not (bundle / 'manifest.json').is_file():

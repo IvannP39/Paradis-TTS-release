@@ -1,20 +1,37 @@
 {
-  "release": "v0",
-  "package_version": "0.1.1",
+  "release": "v0.1.2",
+  "package_version": "0.1.2",
   "model_repository": "IvannP/Paradis-TTS",
-  "model_revision": "344b51ce29957d79551dbd06dfa43fed114b8a98",
+  "model_revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+  "default_weight_kind": "ema",
   "variants": {
     "fp32": {
-      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/344b51ce29957d79551dbd06dfa43fed114b8a98/paradis_tts_fp32.zip",
-      "sha256": "4726751d5c44768a44231d0e3e91ac162254c4b63c4e5b616884a0a9a44f1baa",
-      "bytes": 30212002,
+      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_fp32.zip",
+      "sha256": "24787e5775206b9f9d63da79eb3854ae5c525814eaa8bc74893903cb62dba88d",
+      "bytes": 30213321,
       "onnx_bytes": 32819396
     },
     "int8": {
-      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/344b51ce29957d79551dbd06dfa43fed114b8a98/paradis_tts_int8.zip",
-      "sha256": "c9d13d84fb9a4f0742c62e3eacdafec508901648857c1aa7267fc1eeb54e1c75",
-      "bytes": 8213141,
+      "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_int8.zip",
+      "sha256": "4723a95ebb49aae9ef23611cee78aac41c6383ccade84b5c7fb9dfcdb473d156",
+      "bytes": 8213554,
       "onnx_bytes": 9186652
+    }
+  },
+  "alternative_weights": {
+    "raw": {
+      "fp32": {
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_fp32.zip",
+        "sha256": "9235652f27b0cfea5e342e5d5e0aaec6747e89f69f42b9c3c5f7c1169c9c5298",
+        "bytes": 30213174,
+        "onnx_bytes": 32819396
+      },
+      "int8": {
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_int8.zip",
+        "sha256": "3c4c6eb54a556daabc65eb5f7fb2789abdfa40deb0dac1fe971d4672f46fce87",
+        "bytes": 8213858,
+        "onnx_bytes": 9186652
+      }
     }
   }
 }

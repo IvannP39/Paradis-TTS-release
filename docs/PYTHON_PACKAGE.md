@@ -1,11 +1,11 @@
-# Package Python 0.1.1 — modèles v0
+# Package Python 0.1.2 — modèles v0.1.2
 
 Python 3.10 à 3.12. Runtime CPU : NumPy, ONNX Runtime, Misaki et eSpeak NG.
 Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
 
 Le package est publié sur [PyPI](https://pypi.org/project/paradis-tts/).
 Le wheel et les sources sont aussi joints à la
-[release v0](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0).
+[release v0.1.2](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.2).
 
 ```bash
 python -m pip install paradis-tts
@@ -26,6 +26,7 @@ sur Windows, `~/.cache` ailleurs ; `PARADIS_TTS_CACHE` permet de le déplacer.
 
 ```python
 tts = ParadisTTS(variant="int8")
+tts = ParadisTTS(weight_kind="raw")  # poids finaux bruts, alternative à l'EMA par défaut
 tts = ParadisTTS(local_files_only=True)  # échoue si aucun modèle n'est déjà en cache
 tts = ParadisTTS(model_folder="chemin/vers/fp32")  # archive décompressée, aucun téléchargement
 tts = ParadisTTS(post_traitement=False)  # désactive tous les filtres
@@ -37,7 +38,11 @@ et les graphes ONNX. Ce chemin est utilisé directement, sans réseau ; un chemi
 absent ou invalide provoque une erreur, jamais un téléchargement de remplacement.
 `bundle=...` reste un alias compatible avec les anciennes applications.
 `variant` sert uniquement au téléchargement automatique : le dossier local
-détermine lui-même sa variante. Aucun compte Hugging Face n'est nécessaire.
+détermine lui-même sa variante et ses poids. Aucun compte Hugging Face n'est nécessaire.
+Depuis 0.1.2, les poids par défaut sont la moyenne EMA finale à 10 000 étapes
+de continuation. `weight_kind="ema"` la sélectionne aussi explicitement.
+Les caches sont séparés par release, type de poids et précision : une mise à
+jour vers 0.1.2 ne réutilise pas les anciens poids v0 du cache.
 
 Traitements par défaut : filtre de phase 97, présence jusqu'à 2,5 dB,
 adoucir les aigus dynamiquement jusqu'à 1 dB, haut du spectre réduit de 1,5 dB.

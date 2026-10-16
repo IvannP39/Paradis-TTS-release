@@ -1,0 +1,459 @@
+{
+  "release": "v0.1.2",
+  "package_version": "0.1.2",
+  "default_weight_kind": "ema",
+  "parameters": {
+    "decoder": 3851053,
+    "text": 4231828,
+    "total": 8082881
+  },
+  "text": {
+    "fingerprint": "f6046c2195f96114615f63a941af1f0706e3270d7ad6ad013363ba1100a30c12",
+    "source_checkpoint_sha256": "e779be24b5a70c1832c9b3946a581b031053dc50362478e702dbd07e9d77d340",
+    "step": 8000
+  },
+  "training": {
+    "status": "COMPLETE",
+    "step": 10000,
+    "ema_updates": 10000,
+    "ema_decay": 0.999,
+    "fingerprint": "7ad5a1e89d672e521a4e11fbae1e22d84a88363572d5ba13cf88a3c9ca48e2e6",
+    "last_checkpoint_sha256": "f0cb9a15781c3699534dbdb3206027b4b02529e337bdb5c7599e61d0180aab3a",
+    "validation": {
+      "ema": {
+        "mel": 0.5812129572629932,
+        "stft": 0.9282944535017015,
+        "total": 1.5095074107646946
+      },
+      "raw": {
+        "mel": 0.5816698493957513,
+        "stft": 0.9281938228607175,
+        "total": 1.509863672256469
+      }
+    }
+  },
+  "inference_defaults": {
+    "attack_soften_db": 0.0,
+    "dynamic_soften_db": 1.0,
+    "phase_lock_frames": 97,
+    "presence_max_gain_db": 2.5,
+    "presence_restore": true,
+    "softening_match_level": true,
+    "syllable_soften_db": 0.0,
+    "upper_soften_db": 1.5
+  },
+  "model_license": "Apache-2.0",
+  "perceptual_gain_established": false,
+  "historical_evaluation": "The 300-sentence v0 scores use raw continuation step 6500; not rerun for v0.1.2.",
+  "exports": {
+    "ema": {
+      "checkpoint": {
+        "kind": "ema",
+        "path": "step_10000_ema.pt",
+        "sha256": "5e37e1d3af4ac970003c741c21b3ad5643546d1f9d6b0d43d3b546daf5881d61",
+        "step": 10000
+      },
+      "parity": [
+        {
+          "errors": {
+            "duration": 1.9073486328125e-06,
+            "f0": 9.1552734375e-05,
+            "features": 1.0132789611816406e-06,
+            "noise": 2.86102294921875e-06,
+            "prosody": 1.7881393432617188e-06,
+            "waveform": 3.9517879486083984e-05,
+            "waveform_relative_rms": 3.265972456040478e-05
+          },
+          "samples": 30000,
+          "speed": 1.0,
+          "text": "Bonjour."
+        },
+        {
+          "errors": {
+            "duration": 9.5367431640625e-07,
+            "f0": 0.0001068115234375,
+            "features": 1.1026859283447266e-06,
+            "noise": 4.76837158203125e-06,
+            "prosody": 2.6226043701171875e-06,
+            "waveform": 0.00027666985988616943,
+            "waveform_relative_rms": 0.00010339898632497038
+          },
+          "samples": 76200,
+          "speed": 0.75,
+          "text": "Ces six saucisses sont assez salées."
+        },
+        {
+          "errors": {
+            "duration": 3.814697265625e-06,
+            "f0": 7.62939453125e-05,
+            "features": 1.0728836059570312e-06,
+            "noise": 3.814697265625e-06,
+            "prosody": 2.7418136596679688e-06,
+            "waveform": 1.4603137969970703e-06,
+            "waveform_relative_rms": 1.1573270547322356e-06
+          },
+          "samples": 66600,
+          "speed": 1.25,
+          "text": "La lune illumine le village au milieu de la nuit."
+        },
+        {
+          "errors": {
+            "duration": 1.9073486328125e-06,
+            "f0": 0.0001220703125,
+            "features": 1.1324882507324219e-06,
+            "noise": 5.7220458984375e-06,
+            "prosody": 3.0994415283203125e-06,
+            "waveform": 1.3932585716247559e-06,
+            "waveform_relative_rms": 1.3723806186955894e-06
+          },
+          "samples": 133200,
+          "speed": 1.0,
+          "text": "Le billet coûte 12,50 € et le train part à 18 h 30."
+        }
+      ],
+      "portable_audio": {
+        "checks": [
+          {
+            "matched_noise_source_max_abs_error": 7.367134094238281e-05,
+            "postprocess_max_abs_error": 2.682209014892578e-06,
+            "text": "Bonjour."
+          },
+          {
+            "matched_noise_source_max_abs_error": 0.0001372992992401123,
+            "postprocess_max_abs_error": 6.6533684730529785e-06,
+            "text": "Ces six saucisses sont assez salées."
+          },
+          {
+            "matched_noise_source_max_abs_error": 0.0001935809850692749,
+            "postprocess_max_abs_error": 3.5297125577926636e-06,
+            "text": "La lune illumine le village au milieu de la nuit."
+          }
+        ],
+        "source_rng_note": "Matched noise checks interpolation/math; production PCG64 noise differs from Torch RNG",
+        "status": "PORTABLE_AUDIO_PARITY_PASS"
+      },
+      "quantization": {
+        "decoder": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 3814432,
+          "quantized_tensors": 127
+        },
+        "prosody": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 1113600,
+          "quantized_tensors": 29
+        },
+        "text": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 3031552,
+          "quantized_tensors": 35
+        }
+      },
+      "onnx_sizes": {
+        "fp32": 32819396,
+        "int8": 9186652
+      },
+      "offline_checks": {
+        "fp32": {
+          "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+          "variant": "fp32",
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "network_blocked": true,
+          "seed_repeatable": true,
+          "different_seed_changes_audio": true,
+          "speed_05_and_2_pass": true,
+          "long_text_chunks": 2,
+          "wav_exports": 3,
+          "pcm_sample_rate": 24000,
+          "standalone_postprocess_pass": true,
+          "settings_file_pass": true,
+          "editable_default_settings_pass": true,
+          "samples": [
+            {
+              "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+              "normalized_text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+              "seconds": 5.7,
+              "elapsed_seconds": 0.5648492006585002,
+              "rtf": 0.09909635099271932,
+              "peak": 0.5805146098136902,
+              "rms": 0.07124831141030535,
+              "clipped_fraction": 0.0
+            },
+            {
+              "text": "Voir https://exemple.fr ou écrire à contact@exemple.fr.",
+              "normalized_text": "Voir exemple point èf ère ou écrire à contact arobase exemple point èf ère.",
+              "seconds": 5.35,
+              "elapsed_seconds": 0.47355119977146387,
+              "rtf": 0.08851424294793718,
+              "peak": 0.6202261447906494,
+              "rms": 0.06945659843026926,
+              "clipped_fraction": 0.0
+            }
+          ]
+        },
+        "int8": {
+          "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+          "variant": "int8",
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "network_blocked": true,
+          "seed_repeatable": true,
+          "different_seed_changes_audio": true,
+          "speed_05_and_2_pass": true,
+          "long_text_chunks": 2,
+          "wav_exports": 3,
+          "pcm_sample_rate": 24000,
+          "standalone_postprocess_pass": true,
+          "settings_file_pass": true,
+          "editable_default_settings_pass": true,
+          "samples": [
+            {
+              "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+              "normalized_text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+              "seconds": 5.675,
+              "elapsed_seconds": 0.5392949003726244,
+              "rtf": 0.09502993839165189,
+              "peak": 0.6017069816589355,
+              "rms": 0.0706897177619429,
+              "clipped_fraction": 0.0
+            },
+            {
+              "text": "Voir https://exemple.fr ou écrire à contact@exemple.fr.",
+              "normalized_text": "Voir exemple point èf ère ou écrire à contact arobase exemple point èf ère.",
+              "seconds": 5.4,
+              "elapsed_seconds": 0.4996072007343173,
+              "rtf": 0.09251985198783653,
+              "peak": 0.6003544926643372,
+              "rms": 0.06867472747507007,
+              "clipped_fraction": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "raw": {
+      "checkpoint": {
+        "kind": "raw",
+        "path": "step_10000_raw.pt",
+        "sha256": "48f897e60e68a6efca7fdb469e8310b53949f31cc21614c46d6eb201ac2c7507",
+        "step": 10000
+      },
+      "parity": [
+        {
+          "errors": {
+            "duration": 1.9073486328125e-06,
+            "f0": 9.1552734375e-05,
+            "features": 1.0132789611816406e-06,
+            "noise": 2.86102294921875e-06,
+            "prosody": 1.7881393432617188e-06,
+            "waveform": 3.9964914321899414e-05,
+            "waveform_relative_rms": 3.322003797492771e-05
+          },
+          "samples": 30000,
+          "speed": 1.0,
+          "text": "Bonjour."
+        },
+        {
+          "errors": {
+            "duration": 9.5367431640625e-07,
+            "f0": 0.0001068115234375,
+            "features": 1.1026859283447266e-06,
+            "noise": 4.76837158203125e-06,
+            "prosody": 2.6226043701171875e-06,
+            "waveform": 0.0003320276737213135,
+            "waveform_relative_rms": 0.00012161555858409843
+          },
+          "samples": 76200,
+          "speed": 0.75,
+          "text": "Ces six saucisses sont assez salées."
+        },
+        {
+          "errors": {
+            "duration": 3.814697265625e-06,
+            "f0": 7.62939453125e-05,
+            "features": 1.0728836059570312e-06,
+            "noise": 3.814697265625e-06,
+            "prosody": 2.7418136596679688e-06,
+            "waveform": 1.1920928955078125e-06,
+            "waveform_relative_rms": 1.1487845144308893e-06
+          },
+          "samples": 66600,
+          "speed": 1.25,
+          "text": "La lune illumine le village au milieu de la nuit."
+        },
+        {
+          "errors": {
+            "duration": 1.9073486328125e-06,
+            "f0": 0.0001220703125,
+            "features": 1.1324882507324219e-06,
+            "noise": 5.7220458984375e-06,
+            "prosody": 3.0994415283203125e-06,
+            "waveform": 1.4426186680793762e-06,
+            "waveform_relative_rms": 1.2788401025664708e-06
+          },
+          "samples": 133200,
+          "speed": 1.0,
+          "text": "Le billet coûte 12,50 € et le train part à 18 h 30."
+        }
+      ],
+      "portable_audio": {
+        "checks": [
+          {
+            "matched_noise_source_max_abs_error": 7.367134094238281e-05,
+            "postprocess_max_abs_error": 2.6673078536987305e-06,
+            "text": "Bonjour."
+          },
+          {
+            "matched_noise_source_max_abs_error": 0.0001372992992401123,
+            "postprocess_max_abs_error": 6.307382136583328e-06,
+            "text": "Ces six saucisses sont assez salées."
+          },
+          {
+            "matched_noise_source_max_abs_error": 0.0001935809850692749,
+            "postprocess_max_abs_error": 3.682449460029602e-06,
+            "text": "La lune illumine le village au milieu de la nuit."
+          }
+        ],
+        "source_rng_note": "Matched noise checks interpolation/math; production PCG64 noise differs from Torch RNG",
+        "status": "PORTABLE_AUDIO_PARITY_PASS"
+      },
+      "quantization": {
+        "decoder": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 3814432,
+          "quantized_tensors": 127
+        },
+        "prosody": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 1113600,
+          "quantized_tensors": 29
+        },
+        "text": {
+          "compute": "float32 after dequantization",
+          "int8_weight_elements": 3031552,
+          "quantized_tensors": 35
+        }
+      },
+      "onnx_sizes": {
+        "fp32": 32819396,
+        "int8": 9186652
+      },
+      "offline_checks": {
+        "fp32": {
+          "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+          "variant": "fp32",
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "network_blocked": true,
+          "seed_repeatable": true,
+          "different_seed_changes_audio": true,
+          "speed_05_and_2_pass": true,
+          "long_text_chunks": 2,
+          "wav_exports": 3,
+          "pcm_sample_rate": 24000,
+          "standalone_postprocess_pass": true,
+          "settings_file_pass": true,
+          "editable_default_settings_pass": true,
+          "samples": [
+            {
+              "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+              "normalized_text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+              "seconds": 5.7,
+              "elapsed_seconds": 0.562054899521172,
+              "rtf": 0.09860612272301264,
+              "peak": 0.5909550189971924,
+              "rms": 0.07189265014241372,
+              "clipped_fraction": 0.0
+            },
+            {
+              "text": "Voir https://exemple.fr ou écrire à contact@exemple.fr.",
+              "normalized_text": "Voir exemple point èf ère ou écrire à contact arobase exemple point èf ère.",
+              "seconds": 5.35,
+              "elapsed_seconds": 0.47477260045707226,
+              "rtf": 0.08874254214150884,
+              "peak": 0.6295928955078125,
+              "rms": 0.0700346613322121,
+              "clipped_fraction": 0.0
+            }
+          ]
+        },
+        "int8": {
+          "status": "OFFLINE_PORTABLE_BUNDLE_PASS",
+          "variant": "int8",
+          "torch_installed": false,
+          "kokoro_installed": false,
+          "network_blocked": true,
+          "seed_repeatable": true,
+          "different_seed_changes_audio": true,
+          "speed_05_and_2_pass": true,
+          "long_text_chunks": 2,
+          "wav_exports": 3,
+          "pcm_sample_rate": 24000,
+          "standalone_postprocess_pass": true,
+          "settings_file_pass": true,
+          "editable_default_settings_pass": true,
+          "samples": [
+            {
+              "text": "Le TGV part à 18 h 30 et le billet coûte 12,50 €.",
+              "normalized_text": "Le té gé vé part à dix-huit heures trente et le billet coûte douze euros et cinquante centimes.",
+              "seconds": 5.675,
+              "elapsed_seconds": 0.5372727997601032,
+              "rtf": 0.09467362110310189,
+              "peak": 0.6043785214424133,
+              "rms": 0.07153125129059947,
+              "clipped_fraction": 0.0
+            },
+            {
+              "text": "Voir https://exemple.fr ou écrire à contact@exemple.fr.",
+              "normalized_text": "Voir exemple point èf ère ou écrire à contact arobase exemple point èf ère.",
+              "seconds": 5.4,
+              "elapsed_seconds": 0.494446599856019,
+              "rtf": 0.09156418515852204,
+              "peak": 0.6135249137878418,
+              "rms": 0.06944268676750295,
+              "clipped_fraction": 0.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "release_assets": {
+    "release": "v0.1.2",
+    "package_version": "0.1.2",
+    "model_repository": "IvannP/Paradis-TTS",
+    "model_revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+    "default_weight_kind": "ema",
+    "variants": {
+      "fp32": {
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_fp32.zip",
+        "sha256": "24787e5775206b9f9d63da79eb3854ae5c525814eaa8bc74893903cb62dba88d",
+        "bytes": 30213321,
+        "onnx_bytes": 32819396
+      },
+      "int8": {
+        "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_int8.zip",
+        "sha256": "4723a95ebb49aae9ef23611cee78aac41c6383ccade84b5c7fb9dfcdb473d156",
+        "bytes": 8213554,
+        "onnx_bytes": 9186652
+      }
+    },
+    "alternative_weights": {
+      "raw": {
+        "fp32": {
+          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_fp32.zip",
+          "sha256": "9235652f27b0cfea5e342e5d5e0aaec6747e89f69f42b9c3c5f7c1169c9c5298",
+          "bytes": 30213174,
+          "onnx_bytes": 32819396
+        },
+        "int8": {
+          "url": "https://huggingface.co/IvannP/Paradis-TTS/resolve/8ab2f3e120726940c9f5d2623a45c7c21610e16c/paradis_tts_raw_int8.zip",
+          "sha256": "3c4c6eb54a556daabc65eb5f7fb2789abdfa40deb0dac1fe971d4672f46fce87",
+          "bytes": 8213858,
+          "onnx_bytes": 9186652
+        }
+      }
+    }
+  }
+}

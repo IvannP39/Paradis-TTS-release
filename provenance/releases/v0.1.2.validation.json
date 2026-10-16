@@ -1,0 +1,118 @@
+{
+  "status": "PREPUBLICATION_PASS",
+  "version": "0.1.2",
+  "unit_tests": 5,
+  "twine_check": "PASS",
+  "huggingface": {
+    "repository": "IvannP/Paradis-TTS",
+    "revision": "8ab2f3e120726940c9f5d2623a45c7c21610e16c",
+    "tag": "v0.1.2"
+  },
+  "installed_wheel": {
+    "ema": {
+      "fp32": {
+        "status": "INSTALLED_WHEEL_PASS",
+        "variant": "fp32",
+        "version": "0.1.2",
+        "weight_kind": "ema",
+        "model_release": "v0.1.2",
+        "decoder_step": 10000,
+        "torch_installed": false,
+        "kokoro_installed": false,
+        "default_equals_explicit_postprocessing": true,
+        "disable_processing_changes_waveform": true,
+        "offline_synthesis": true,
+        "download_and_offline_cache_verified": true,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        }
+      },
+      "int8": {
+        "status": "INSTALLED_WHEEL_PASS",
+        "variant": "int8",
+        "version": "0.1.2",
+        "weight_kind": "ema",
+        "model_release": "v0.1.2",
+        "decoder_step": 10000,
+        "torch_installed": false,
+        "kokoro_installed": false,
+        "default_equals_explicit_postprocessing": true,
+        "disable_processing_changes_waveform": true,
+        "offline_synthesis": true,
+        "download_and_offline_cache_verified": true,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        }
+      }
+    },
+    "raw": {
+      "fp32": {
+        "status": "INSTALLED_WHEEL_PASS",
+        "variant": "fp32",
+        "version": "0.1.2",
+        "weight_kind": "raw",
+        "model_release": "v0.1.2",
+        "decoder_step": 10000,
+        "torch_installed": false,
+        "kokoro_installed": false,
+        "default_equals_explicit_postprocessing": true,
+        "disable_processing_changes_waveform": true,
+        "offline_synthesis": true,
+        "download_and_offline_cache_verified": true,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        }
+      },
+      "int8": {
+        "status": "INSTALLED_WHEEL_PASS",
+        "variant": "int8",
+        "version": "0.1.2",
+        "weight_kind": "raw",
+        "model_release": "v0.1.2",
+        "decoder_step": 10000,
+        "torch_installed": false,
+        "kokoro_installed": false,
+        "default_equals_explicit_postprocessing": true,
+        "disable_processing_changes_waveform": true,
+        "offline_synthesis": true,
+        "download_and_offline_cache_verified": true,
+        "postprocessing": {
+          "phase_lock_frames": 97,
+          "presence_restore": true,
+          "presence_max_gain_db": 2.5,
+          "dynamic_soften_db": 1.0,
+          "upper_soften_db": 1.5,
+          "attack_soften_db": 0.0,
+          "syllable_soften_db": 0.0,
+          "dynamics_smoothing": 0.0,
+          "softening_match_level": true
+        }
+      }
+    }
+  },
+  "full_300_sentence_evaluation_rerun": false
+}

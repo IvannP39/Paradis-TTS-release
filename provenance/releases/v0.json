@@ -1,0 +1,155 @@
+{
+  "release": "v0",
+  "package_version": "0.1.0",
+  "parameters": {
+    "decoder": 3851053,
+    "text": 4231828,
+    "total": 8082881
+  },
+  "text": {
+    "fingerprint": "f6046c2195f96114615f63a941af1f0706e3270d7ad6ad013363ba1100a30c12",
+    "source_checkpoint_sha256": "e779be24b5a70c1832c9b3946a581b031053dc50362478e702dbd07e9d77d340",
+    "step": 8000
+  },
+  "decoder": {
+    "source_sha256": "4ba467ca90b52ec169341eeb938e81177f19982b1c480df214747757c8ac9646",
+    "step": 6500,
+    "kind": "raw"
+  },
+  "decoder_export_checkpoint_sha256": "9a431736edcc20ac11af2cefc730b2bb7835be0b944c30e2e0a87c4184216bf1",
+  "kind": "raw last generator; not EMA",
+  "inference_defaults": {
+    "attack_soften_db": 0.0,
+    "dynamic_soften_db": 1.0,
+    "phase_lock_frames": 97,
+    "presence_max_gain_db": 2.5,
+    "presence_restore": true,
+    "softening_match_level": true,
+    "syllable_soften_db": 0.0,
+    "upper_soften_db": 1.5
+  },
+  "parity": [
+    {
+      "errors": {
+        "duration": 1.9073486328125e-06,
+        "f0": 9.1552734375e-05,
+        "features": 1.0132789611816406e-06,
+        "noise": 2.86102294921875e-06,
+        "prosody": 1.7881393432617188e-06,
+        "waveform": 3.684312105178833e-05,
+        "waveform_relative_rms": 3.333876785075659e-05
+      },
+      "samples": 30000,
+      "speed": 1.0,
+      "text": "Bonjour."
+    },
+    {
+      "errors": {
+        "duration": 9.5367431640625e-07,
+        "f0": 0.0001068115234375,
+        "features": 1.1026859283447266e-06,
+        "noise": 4.76837158203125e-06,
+        "prosody": 2.6226043701171875e-06,
+        "waveform": 0.0006873905658721924,
+        "waveform_relative_rms": 0.00011625190211921663
+      },
+      "samples": 76200,
+      "speed": 0.75,
+      "text": "Ces six saucisses sont assez salées."
+    },
+    {
+      "errors": {
+        "duration": 3.814697265625e-06,
+        "f0": 7.62939453125e-05,
+        "features": 1.0728836059570312e-06,
+        "noise": 3.814697265625e-06,
+        "prosody": 2.7418136596679688e-06,
+        "waveform": 1.3113021850585938e-06,
+        "waveform_relative_rms": 1.1304203781444973e-06
+      },
+      "samples": 66600,
+      "speed": 1.25,
+      "text": "La lune illumine le village au milieu de la nuit."
+    },
+    {
+      "errors": {
+        "duration": 1.9073486328125e-06,
+        "f0": 0.0001220703125,
+        "features": 1.1324882507324219e-06,
+        "noise": 5.7220458984375e-06,
+        "prosody": 3.0994415283203125e-06,
+        "waveform": 1.5944242477416992e-06,
+        "waveform_relative_rms": 1.3392825042577683e-06
+      },
+      "samples": 133200,
+      "speed": 1.0,
+      "text": "Le billet coûte 12,50 € et le train part à 18 h 30."
+    }
+  ],
+  "quantization": {
+    "decoder": {
+      "compute": "float32 after dequantization",
+      "int8_weight_elements": 3814432,
+      "quantized_tensors": 127
+    },
+    "prosody": {
+      "compute": "float32 after dequantization",
+      "int8_weight_elements": 1113600,
+      "quantized_tensors": 29
+    },
+    "text": {
+      "compute": "float32 after dequantization",
+      "int8_weight_elements": 3031552,
+      "quantized_tensors": 35
+    }
+  },
+  "portable_audio_parity": {
+    "checks": [
+      {
+        "matched_noise_source_max_abs_error": 7.367134094238281e-05,
+        "postprocess_max_abs_error": 2.644956111907959e-06,
+        "text": "Bonjour."
+      },
+      {
+        "matched_noise_source_max_abs_error": 0.0001372992992401123,
+        "postprocess_max_abs_error": 7.105059921741486e-06,
+        "text": "Ces six saucisses sont assez salées."
+      },
+      {
+        "matched_noise_source_max_abs_error": 0.0001935809850692749,
+        "postprocess_max_abs_error": 5.707144737243652e-06,
+        "text": "La lune illumine le village au milieu de la nuit."
+      }
+    ],
+    "source_rng_note": "Matched noise checks interpolation/math; production PCG64 noise differs from Torch RNG",
+    "status": "PORTABLE_AUDIO_PARITY_PASS"
+  },
+  "onnx_sizes": {
+    "fp32": 32819396,
+    "int8": 9186652
+  },
+  "model_license": "Apache-2.0",
+  "training_split_counts": {
+    "train": 12000,
+    "validation": 500,
+    "test": 500
+  },
+  "release_assets": {
+    "release": "v0",
+    "package_version": "0.1.0",
+    "variants": {
+      "fp32": {
+        "url": "https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts_fp32.zip",
+        "sha256": "4726751d5c44768a44231d0e3e91ac162254c4b63c4e5b616884a0a9a44f1baa",
+        "bytes": 30212002,
+        "onnx_bytes": 32819396
+      },
+      "int8": {
+        "url": "https://github.com/IvannP39/Paradis-TTS-release/releases/download/v0/paradis_tts_int8.zip",
+        "sha256": "c9d13d84fb9a4f0742c62e3eacdafec508901648857c1aa7267fc1eeb54e1c75",
+        "bytes": 8213141,
+        "onnx_bytes": 9186652
+      }
+    }
+  }
+}

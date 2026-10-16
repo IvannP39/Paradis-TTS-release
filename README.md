@@ -1,7 +1,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/IvannP39/Paradis-TTS-release/main/assets/paradis-banner.png" alt="Paradis — Synthèse vocale française sur CPU" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0"><img alt="Release v0" src="https://img.shields.io/badge/release-v0-9ee8cb?style=flat-square"></a>
+  <a href="https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.2"><img alt="Release v0.1.2" src="https://img.shields.io/badge/release-v0.1.2-9ee8cb?style=flat-square"></a>
   <a href="https://huggingface.co/IvannP/Paradis-TTS"><img alt="Hugging Face" src="https://img.shields.io/badge/Hugging_Face-mod%C3%A8les-ffd681?style=flat-square"></a>
   <a href="https://pypi.org/project/paradis-tts/"><img alt="PyPI" src="https://img.shields.io/pypi/v/paradis-tts?style=flat-square"></a>
   <img alt="CPU et ONNX" src="https://img.shields.io/badge/runtime-CPU_%C2%B7_ONNX-c3dbe6?style=flat-square">
@@ -14,7 +14,7 @@ des poids ONNX FP32 ou INT8, et un post-traitement intégré. Après le premier
 téléchargement, la synthèse fonctionne entièrement hors ligne.
 
 [Écouter la voix](https://huggingface.co/IvannP/Paradis-TTS#écouter) ·
-[Télécharger v0](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0) ·
+[Télécharger v0.1.2](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.2) ·
 [Documentation Python](https://github.com/IvannP39/Paradis-TTS-release/blob/main/docs/PYTHON_PACKAGE.md)
 
 ## Essayer
@@ -49,6 +49,7 @@ Le package est disponible sur [PyPI](https://pypi.org/project/paradis-tts/).
 
 ```python
 tts = ParadisTTS(variant="int8")
+tts = ParadisTTS(weight_kind="raw")  # poids bruts finaux, au lieu de la moyenne EMA
 tts = ParadisTTS(post_traitement=False)  # sortie brute
 tts = ParadisTTS(model_folder="chemin/vers/fp32")  # archive locale décompressée
 ```
@@ -59,7 +60,10 @@ présence jusqu'à 2,5 dB et deux adoucissements du spectre à 1 et 1,5 dB.
 L'INT8 réduit le téléchargement ; il ne garantit pas une exécution plus rapide
 et peut modifier la voix. Le FP32 est le choix par défaut.
 
-## Mesures v0
+## Mesures de référence — v0
+
+Ces mesures concernent les anciens poids bruts à 6 500 étapes. Elles n'ont pas
+été recalculées pour l'EMA de v0.1.2 ; elles ne mesurent pas son gain de qualité.
 
 300 phrases inédites, articles séparés du corpus de distillation. CPU AMD Ryzen 7 5800H, Windows, deux threads configurés dans ONNX Runtime/PyTorch.
 
@@ -76,15 +80,16 @@ WER : taux d’erreurs de mots mesuré par Whisper Small en français. DNSMOS P.
 
 Paradis adapte la méthode de [Paradee](https://github.com/sahilmahendrakar/paradee)
 au français et distille [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M),
-voix `ff_siwis`. Cette v0 assemble le modèle texte à 8 000 étapes et le décodeur
-A affiné, figé à **6 500 étapes de sa continuation GAN**. Elle utilise les poids
-`last` bruts, pas une sélection EMA. Le corpus de distillation comporte
+voix `ff_siwis`. La v0.1.2 assemble le modèle texte à 8 000 étapes et le décodeur
+A affiné, avec sa **moyenne EMA finale à 10 000 étapes de continuation GAN**
+(décroissance 0,999). Les poids bruts finaux restent disponibles en alternative.
+Le corpus de distillation comporte
 12 000 phrases françaises d'apprentissage, 500 de validation et 500 de test.
 
 **Limites :** une seule voix, français uniquement, quelques artefacts résiduels
 sur les consonnes, normalisation limitée aux formes courantes. La qualité et
 les prononciations du teacher restent des limites. Les autres langues et le
-clonage de voix ne sont pas pris en charge. v0 est une première release expérimentale.
+clonage de voix ne sont pas pris en charge. Le modèle reste expérimental.
 
 ## Pour aller plus loin
 
