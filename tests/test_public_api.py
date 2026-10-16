@@ -1,5 +1,6 @@
 """Public API switches, pinned downloads and hostile archive rejection."""
 import hashlib
+from contextlib import redirect_stderr,redirect_stdout
 import io
 import json
 from pathlib import Path
@@ -16,6 +17,85 @@ from paradis_tts.normalization_v2 import VERSION
 
 
 class PublicAPI(unittest.TestCase):
+    def test_first_download_reports_progress_and_cache_reuse(self):
+        payload=b'graph'
+        archive=io.BytesIO()
+        with zipfile.ZipFile(archive,'w') as stream:
+            stream.writestr('decoder.onnx',payload)
+            stream.writestr('manifest.json',json.dumps({'files':{'decoder.onnx':hashlib.sha256(payload).hexdigest()}}))
+        blob=archive.getvalue()
+        registry={'release':'logs-test','variants':{'fp32':{'url':'https://example.invalid/model.zip',
+            'bytes':len(blob),'sha256':hashlib.sha256(blob).hexdigest()}}}
+        original=Path.read_text
+        def read(path,*args,**kwargs):
+            return json.dumps(registry) if path.name=='release_assets.json' else original(path,*args,**kwargs)
+        with tempfile.TemporaryDirectory() as temporary, patch.object(Path,'read_text',read):
+            stdout,stderr=io.StringIO(),io.StringIO()
+            with redirect_stdout(stdout), redirect_stderr(stderr), patch('urllib.request.urlopen',return_value=io.BytesIO(blob)):
+                downloaded=download_model(cache_dir=temporary)
+            self.assertEqual(stdout.getvalue(),'')
+            output=stderr.getvalue()
+            for text in ('Hugging Face','100%','SHA256','Extraction','enregistré dans le cache'):
+                self.assertIn(text,output)
+            self.assertLess(output.index('SHA256'),output.index('Extraction'))
+            self.assertLess(output.index('Extraction'),output.index('enregistré dans le cache'))
+            stderr=io.StringIO()
+            with redirect_stderr(stderr), patch('urllib.request.urlopen',side_effect=AssertionError('Unexpected network')):
+                self.assertEqual(download_model(cache_dir=temporary),downloaded)
+            self.assertIn('trouvé dans le cache',stderr.getvalue())
+            self.assertNotIn('Téléchargement',stderr.getvalue())
+
+    def test_quiet_fallback_suppresses_progress_without_changing_global_hf_settings(self):
+        from huggingface_hub.utils import are_progress_bars_disabled
+        archive=io.BytesIO()
+        with zipfile.ZipFile(archive,'w') as stream:
+            stream.writestr('manifest.json',json.dumps({'files':{}}))
+        blob=archive.getvalue()
+        registry={'release':'quiet-test','model_repository':'owner/model','model_revision':'pinned',
+            'variants':{'fp32':{'url':'https://example.invalid/model.zip','bytes':len(blob),
+                              'sha256':hashlib.sha256(blob).hexdigest()}}}
+        original=Path.read_text
+        def read(path,*args,**kwargs):
+            return json.dumps(registry) if path.name=='release_assets.json' else original(path,*args,**kwargs)
+        before=are_progress_bars_disabled()
+        with tempfile.TemporaryDirectory() as temporary:
+            source=Path(temporary)/'download.zip';source.write_bytes(blob)
+            def hf_download(**kwargs):
+                with kwargs['tqdm_class'](total=10,desc='HF progress',disable=False) as progress:
+                    progress.update(10)
+                return str(source)
+            stdout,stderr=io.StringIO(),io.StringIO()
+            with patch.object(Path,'read_text',read), patch('urllib.request.urlopen',return_value=io.BytesIO(b'')), patch(
+                    'huggingface_hub.hf_hub_download',side_effect=hf_download), redirect_stdout(stdout), redirect_stderr(stderr):
+                download_model(cache_dir=Path(temporary)/'cache',verbose=False)
+                download_model(cache_dir=Path(temporary)/'cache',verbose=False)
+            self.assertEqual(stdout.getvalue(),'')
+            self.assertEqual(stderr.getvalue(),'')
+        self.assertEqual(are_progress_bars_disabled(),before)
+
+    def test_model_initialization_logs_only_after_success_and_can_be_quiet(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder=Path(temporary)
+            (folder/'manifest.json').write_text(json.dumps({'graphs':[]}))
+            for verbose in (True,False):
+                stdout,stderr=io.StringIO(),io.StringIO()
+                with redirect_stdout(stdout), redirect_stderr(stderr), patch('paradis_tts.onnx_runtime.OnnxTTS.__init__',return_value=None):
+                    model=ParadisTTS(model_folder=folder,verbose=verbose)
+                self.assertEqual(model.verbose,verbose)
+                self.assertEqual(stdout.getvalue(),'')
+                if verbose:
+                    self.assertIn('Modèle local',stderr.getvalue())
+                    self.assertIn('Chargement du modèle',stderr.getvalue())
+                    self.assertIn('Modèle prêt',stderr.getvalue())
+                else: self.assertEqual(stderr.getvalue(),'')
+            stderr=io.StringIO()
+            with redirect_stderr(stderr), patch('paradis_tts.onnx_runtime.OnnxTTS.__init__',side_effect=ValueError('Invalid model')):
+                with self.assertRaisesRegex(ValueError,'Invalid model'): ParadisTTS(model_folder=folder)
+            self.assertNotIn('Modèle prêt',stderr.getvalue())
+            for bad in ('yes',1,None):
+                with self.assertRaises(TypeError): ParadisTTS(model_folder=folder,verbose=bad)
+                with self.assertRaises(TypeError): download_model(verbose=bad)
+
     def test_incomplete_direct_download_uses_verified_official_hf_fallback(self):
         content=b'graph'
         archive=io.BytesIO()

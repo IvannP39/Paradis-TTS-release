@@ -1,7 +1,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/IvannP39/Paradis-TTS-release/main/assets/paradis-banner.png" alt="Paradis — Synthèse vocale française sur CPU" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.3"><img alt="Release v0.1.3" src="https://img.shields.io/badge/release-v0.1.3-9ee8cb?style=flat-square"></a>
+  <a href="https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.4"><img alt="Release v0.1.4" src="https://img.shields.io/badge/release-v0.1.4-9ee8cb?style=flat-square"></a>
   <a href="https://huggingface.co/IvannP/Paradis-TTS"><img alt="Hugging Face" src="https://img.shields.io/badge/Hugging_Face-mod%C3%A8les-ffd681?style=flat-square"></a>
   <a href="https://pypi.org/project/paradis-tts/"><img alt="PyPI" src="https://img.shields.io/pypi/v/paradis-tts?style=flat-square"></a>
   <img alt="CPU et ONNX" src="https://img.shields.io/badge/runtime-CPU_%C2%B7_ONNX-c3dbe6?style=flat-square">
@@ -43,6 +43,10 @@ La construction de `ParadisTTS()` télécharge les poids FP32 depuis Hugging Fac
 et les garde en cache après vérification SHA256. Aucun GPU, PyTorch ni
 Kokoro n'est nécessaire. `audio` est un tableau NumPy mono, `float32`, à 24 kHz.
 Le package est disponible sur [PyPI](https://pypi.org/project/paradis-tts/).
+
+La progression du téléchargement et les étapes de chargement s'affichent par
+défaut. Pour un chargement silencieux : `ParadisTTS(verbose=False)`.
+Le package v0.1.4 réutilise les modèles v0.1.3 et leur cache.
 
 ## Choisir sa version
 

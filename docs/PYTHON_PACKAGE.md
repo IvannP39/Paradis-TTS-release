@@ -1,5 +1,7 @@
-# Package Python 0.1.3 — modèles v0.1.3
+# Package Python 0.1.4 — modèles v0.1.3
 
+La 0.1.4 affiche par défaut la progression du téléchargement et les étapes de
+chargement. Elle réutilise les poids et le cache v0.1.3, sans changement audio.
 La 0.1.3 optimise les filtres et désactive l'adoucissement dynamique après
 validation à l'écoute le 16 octobre 2026. Les poids neuronaux restent identiques
 à la 0.1.2 : moyenne EMA finale à 10 000 étapes. Les anciennes releases sont conservées.
@@ -9,7 +11,7 @@ Ni PyTorch, ni Kokoro, ni GPU ne sont nécessaires à l'inférence.
 
 Le package est publié sur [PyPI](https://pypi.org/project/paradis-tts/).
 Le wheel et les sources sont aussi joints à la
-[release v0.1.3](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.3).
+[release v0.1.4](https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.4).
 
 ```bash
 python -m pip install paradis-tts
@@ -27,6 +29,20 @@ Le premier chargement télécharge le FP32 depuis Hugging Face, à une révision
 son SHA256 puis le conserve dans le cache. Les suivants fonctionnent hors ligne.
 La sortie n'est pas jouée automatiquement. Le cache est sous `%LOCALAPPDATA%`
 sur Windows, `~/.cache` ailleurs ; `PARADIS_TTS_CACHE` permet de le déplacer.
+
+Depuis 0.1.4, la bibliothèque affiche automatiquement le téléchargement avec
+progression, la vérification SHA256, l'extraction, le chargement CPU puis
+« Modèle prêt ». Si les fichiers sont déjà en cache, elle le signale sans les
+retélécharger. Ces messages vont sur `stderr` ; aucun message n'est ajouté à
+chaque synthèse. Pour désactiver ces messages et la barre de progression :
+
+```python
+tts = ParadisTTS(verbose=False)
+```
+
+`download_model(verbose=False)` permet aussi un téléchargement silencieux.
+Cette option ne modifie pas les réglages globaux de Hugging Face et ne masque
+pas les exceptions ni les éventuels avertissements des dépendances.
 
 ```python
 tts = ParadisTTS(variant="int8")
@@ -75,7 +91,10 @@ internes et reste propre à la synthèse.
 paradis-tts synthesize --text "Bonjour tout le monde." --output bonjour.wav
 paradis-tts synthesize --variant int8 --text "Bonjour." --output bonjour.wav
 paradis-tts synthesize --model-folder chemin/vers/fp32 --text "Bonjour." --output bonjour.wav
+paradis-tts synthesize --quiet --text "Bonjour." --output bonjour.wav
 ```
+
+Les logs de la CLI vont sur `stderr` ; son rapport JSON reste seul sur `stdout`.
 
 Construire les distributions : `python -m build`, puis
 `python -m twine check dist/*`. Le wheel embarque uniquement le runtime ; les
