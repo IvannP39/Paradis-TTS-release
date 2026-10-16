@@ -1,0 +1,35 @@
+{
+  "package_version": "0.1.4",
+  "model_release": "v0.1.3",
+  "model_revision": "3815937c283e9f63aa63791d3b5455b9270e426f",
+  "github_release": "https://github.com/IvannP39/Paradis-TTS-release/releases/tag/v0.1.4",
+  "github_tag_commit": "fa76978ab5af1eda9a2ef1e9e59d44b3c4364822",
+  "pypi": "https://pypi.org/project/paradis-tts/0.1.4/",
+  "workflow": "https://github.com/IvannP39/Paradis-TTS-release/actions/runs/38882683855",
+  "huggingface_commit": "95111dc499c7f7f9b700a3bdc82333994f8827cf",
+  "distributions": [
+    {
+      "filename": "paradis_tts-0.1.4-py3-none-any.whl",
+      "sha256": "5bdf6907b45f38c46e8a18a51146fa0b93e6161cff523a9c9b69e19cbc12ae29",
+      "bytes": 31651,
+      "pypi_url": "https://files.pythonhosted.org/packages/f8/65/8831551d453fc7a4a200f99c71b003e595d14d56700e1891acc0a99f7fda/paradis_tts-0.1.4-py3-none-any.whl"
+    },
+    {
+      "filename": "paradis_tts-0.1.4.tar.gz",
+      "sha256": "7dfad565deb47ffc0635cc68f8f09d271455b15ace6e06d0607d910ef5f62d7c",
+      "bytes": 35056,
+      "pypi_url": "https://files.pythonhosted.org/packages/7f/19/c98d2350a52781f34ccb933f1884188975173694805543507bae491e98c7/paradis_tts-0.1.4.tar.gz"
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "package_version": "0.1.4",
+    "samples": 43800,
+    "audio_sha256": "9b6662867ed6fe733dae88c23506df825f74aa1b3eef4bd72f4acd4497d4bb3e",
+    "previous_0_1_3_audio_identical": true,
+    "real_download": true,
+    "silent_offline": true,
+    "cli_json_and_quiet": true,
+    "model_release": "v0.1.3"
+  }
+}
